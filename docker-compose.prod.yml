@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  client:
+    container_name: pds-client
+    build:
+      args:
+        NODE_ENV: production
+      context: ./client/
+      dockerfile: Dockerfile-prod
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
