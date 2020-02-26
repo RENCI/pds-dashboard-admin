@@ -1,0 +1,5 @@
+export const ConfigActionTypes = { 
+  TOGGLE_ENABLED : 'TOGGLE_ENABLED',
+  GET_ALL_PLUGINS : 'GET_ALL_PLUGINS',
+  GET_PLUGIN_BY_ID : 'GET_PLUGIN_BY_ID'
+}
