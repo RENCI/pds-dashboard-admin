@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/storage';
 
-import configReducer from './config/config.reducer'
+import configReducer from './config/config.reducer';
+
+const rootReducer = combineReducers({
+  config: configReducer
+})
+
+export default rootReducer;

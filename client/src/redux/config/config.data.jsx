@@ -1,4 +1,4 @@
-export const CONFIG_DEFAULT = [
+const CONFIG_DEFAULT = [
   {
     "enabled": true,
     "piid": "pdspi-guidance-example",
@@ -33,7 +33,7 @@ export const CONFIG_DEFAULT = [
     ],
     "pluginType": "g",
     "requiredPatientVariables": [
-      {   
+      {
         "id": "LOINC:30525-0",
         "legalValues": {
           "minimum": "0",
@@ -150,3 +150,4 @@ export const CONFIG_DEFAULT = [
     "title": "FHIR data provider"
   }
 ];
+ export default CONFIG_DEFAULT;

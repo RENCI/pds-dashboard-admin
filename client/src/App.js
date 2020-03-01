@@ -1,11 +1,17 @@
 import React from "react";
+import { connect } from 'react-redux';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
-const App = () => (
-  <div>
-    <AdminDashboard />
-    <h1>Hello World</h1>
-  </div>
-)
+const App = ({ config }) => {
+  return (
+    <div>
+      {config.plugins.length}
+    </div>
+  )
+}
 
-export default App;
+const mapStateToProps = state => ({
+  config: state.config
+})
+
+export default connect(mapStateToProps)(App);
