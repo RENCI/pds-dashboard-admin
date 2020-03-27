@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -9,6 +10,7 @@ import {
   Typography,
   Paper,
 } from "@material-ui/core";
+import CustomTable from "../../components/custom-table/custom-table.component";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,9 +28,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleTable() {
+const SimpleTable = ({ config }) => {
   const classes = useStyles();
-
+  console.log(Object.values(config.plugins[1]))
   return (
     <>
       <Typography variant="h6" id="tableTitle" className={classes.tableTitle}>
@@ -88,6 +90,18 @@ export default function SimpleTable() {
         </Table>
       </Paper>
       <Typography variant="h6" id="tableTitle" className={classes.tableTitle}>
+        Guidance Plugins Installed
+      </Typography>
+      <Paper>
+          {
+            config.plugins
+              ?
+              <CustomTable plugins={config.plugins.filter(plugins => plugins.pluginType === 'g')}/>
+              :
+              null
+          }
+      </Paper>
+      <Typography variant="h6" id="tableTitle" className={classes.tableTitle}>
         Model Plugins Installed
       </Typography>
       <Paper className={classes.root}>
@@ -145,3 +159,9 @@ export default function SimpleTable() {
     </>
   );
 }
+
+const mapStateToProps = (state) => ({
+  config: state.config
+})
+
+export default connect(mapStateToProps)(SimpleTable)
