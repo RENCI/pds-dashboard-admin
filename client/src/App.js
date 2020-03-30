@@ -1,11 +1,12 @@
 import React from "react";
+import { ConfigProvider } from './context/Context';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
 const App = () => {
   return (
-    <div>
+    <ConfigProvider>
       <AdminDashboard />
-    </div>
+    </ConfigProvider>
   )
 }
 

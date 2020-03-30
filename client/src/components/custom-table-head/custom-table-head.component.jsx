@@ -1,18 +1,18 @@
 import React from 'react';
 
-const CustomTableHead = () => {
+import {
+  TableCell,
+  TableRow,
+  TableHead
+} from "@material-ui/core";
+
+const CustomTableHead = ({ tableHeaders }) => {
   return (
-    <thead>
-    <tr>
-      <th>Enabled</th>
-      <th>ID</th>
-      <th>Version</th>
-      <th>Parameter Defaults</th>
-      <th>Selectors</th>
-      <th>Patient Variables</th>
-      <th>Description</th>
-    </tr>
-  </thead>
+    <TableHead>
+      <TableRow>
+        {tableHeaders.map(header => <TableCell key={header}>{header}</TableCell>)}
+      </TableRow>
+    </TableHead>
   )
 };
 

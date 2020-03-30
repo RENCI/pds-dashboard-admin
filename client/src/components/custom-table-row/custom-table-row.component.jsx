@@ -19,11 +19,13 @@ const CustomTableRow = ({ plugin }) => {
       </TableCell>
       <TableCell>{plugin.piid}</TableCell>
       <TableCell>{plugin.version}</TableCell>
-      <TableCell>{plugin.pluginParameterDefaults[0].parameterValue.value}</TableCell>
-      <TableCell>{plugin.pluginSelectors[0].selectorValue.title}, {plugin.pluginSelectors[0].selectorValue.value}</TableCell>
-      <TableCell>{plugin.requiredPatientVariables.map(variable => variable.id)}</TableCell>
-      <TableCell>{plugin.title}</TableCell>
+      {plugin.pluginParameterDefaults ? <TableCell>{plugin.pluginParameterDefaults[0].parameterValue.value}</TableCell> : null}
+      {plugin.pluginSelectors ? <TableCell>{plugin.pluginSelectors.filter(selector => selector.selectorValue).map(item => `${item.selectorValue.title} : ${item.selectorValue.value}`)}</TableCell> : null}
+      {plugin.requiredPatientVariables ? <TableCell>{`${plugin.requiredPatientVariables[0].id} and ${plugin.requiredPatientVariables.length} others`}</TableCell> : null}
+      {plugin.supportedPatientVariables ? <TableCell>{`${plugin.supportedPatientVariables[0].id} and ${plugin.supportedPatientVariables.length} others`}</TableCell> : null} 
+      {plugin.title ? <TableCell>{plugin.title}</TableCell> : null}
     </TableRow>
   )
-}
+};
+
 export default CustomTableRow;
