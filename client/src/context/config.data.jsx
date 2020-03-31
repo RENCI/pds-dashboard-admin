@@ -1,4 +1,4 @@
-const CONFIG_DEFAULT = [
+const SAMPLE_PLUGINS = [
   {
     "enabled": true,
     "piid": "pdspi-guidance-example-1",
@@ -434,4 +434,4 @@ const CONFIG_DEFAULT = [
     "title": "FHIR data provider"
   }
 ];
- export default CONFIG_DEFAULT;
+ export default SAMPLE_PLUGINS;

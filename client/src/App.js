@@ -1,5 +1,5 @@
 import React from "react";
-import { ConfigProvider } from './context/Context';
+import { ConfigProvider } from './context/config-context';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
 const App = () => {

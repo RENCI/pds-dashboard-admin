@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ConfigContext } from '../../context/config-context';
 
 import {
   TableCell,
@@ -7,12 +8,13 @@ import {
 } from "@material-ui/core";
 
 const CustomTableRow = ({ plugin }) => {
+  const { dispatch } = useContext(ConfigContext);
   return (
     <TableRow>
       <TableCell>
         <Switch
           checked={plugin.enabled}
-          // onChange={handleChange}
+          onChange={() => dispatch({ type: "toggleEnable", payload: plugin })}
           name="checkedA"
           inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
