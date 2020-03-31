@@ -14,7 +14,7 @@ const CustomTableRow = ({ plugin }) => {
       <TableCell>
         <Switch
           checked={plugin.enabled}
-          onChange={() => dispatch({ type: "toggleEnable", payload: plugin })}
+          onChange={() => dispatch({ type: "TOGGLE_ENABLED", payload: plugin })}
           name="checkedA"
           inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
