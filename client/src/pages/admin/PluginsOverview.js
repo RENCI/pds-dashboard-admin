@@ -3,8 +3,9 @@ import { ConfigContext } from '../../context/config-context';
 import CustomTable from "../../components/custom-table/custom-table.component";
 
 const PluginsOverview = () => {
-  const { state } = useContext(ConfigContext);
-  const { plugins } = state;
+  const context = useContext(ConfigContext);
+  console.log(context)
+  const { plugins } = context.state;
   return (
     <>
       <CustomTable

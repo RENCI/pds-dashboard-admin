@@ -2,8 +2,7 @@ import React from "react";
 import AdminMenu from './AdminMenu';
 import Grid from "@material-ui/core/Grid";
 
-export default function AdminDashboard() {
-
+const AdminDashboard = () => {
   return (
     <>
       <Grid container spacing={3}>
@@ -13,5 +12,6 @@ export default function AdminDashboard() {
       </Grid>
     </>
   );
-  
 }
+
+export default AdminDashboard;
