@@ -1,0 +1,2 @@
+export const SET_CONFIG = 'SET_CONFIG';
+export const TOGGLE_ENABLED = 'TOGGLE_ENABLED';
