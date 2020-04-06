@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { ConfigContext } from '../../context/config-context';
 
 import {
@@ -8,13 +8,19 @@ import {
 } from "@material-ui/core";
 
 const CustomTableRow = ({ plugin }) => {
-  const { dispatch } = useContext(ConfigContext);
+  const context = useContext(ConfigContext);
+  const [enabled, setEnabled] = useState(plugin.enabled);
+
+  const handleChange = () => {
+    setEnabled(!enabled)
+    console.table(plugin)
+  }
   return (
     <TableRow>
       <TableCell>
         <Switch
-          checked={plugin.enabled}
-          onChange={() => dispatch({ type: "TOGGLE_ENABLED", payload: plugin })}
+          checked={enabled}
+          onChange={handleChange}
           name="checkedA"
           inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
