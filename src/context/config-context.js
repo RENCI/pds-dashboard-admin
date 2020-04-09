@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, createContext } from 'react';
+import { configValidator } from '../validation/config.validation';
 
 import axios from 'axios';
 
@@ -59,10 +60,14 @@ export const ConfigProvider = ({ children }) => {
       try {
         const res = await getConfig();
 
-        dispatch({
-          type: SET_CONFIG,
-          plugins: res
-        });
+        if (configValidator(res)) {
+          dispatch({
+            type: SET_CONFIG,
+            plugins: res
+          });
+        } else {
+          throw new Error("Config data is invalid: " + res);
+        }
       }
       catch (error) {
         console.error(error);
