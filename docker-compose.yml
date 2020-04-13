@@ -5,7 +5,7 @@ services:
   pds-dashboard-admin:
     container_name: pds-dashboard-admin
     build:
-      context: ./client
+      context: .
       dockerfile: Dockerfile
     volumes:
       - '.:/app'
