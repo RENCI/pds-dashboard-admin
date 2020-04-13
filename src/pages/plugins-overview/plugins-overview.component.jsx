@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 import { ConfigContext } from '../../context/config-context';
-import CustomTable from "../../components/custom-table/custom-table.component";
+import CustomTable from '../../components/custom-table/custom-table.component';
 
 const PluginsOverview = () => {
   const context = useContext(ConfigContext);

@@ -10,18 +10,24 @@ import {
 const CustomTableRow = ({ plugin }) => {
   const {dispatch} = useContext(ConfigContext);
   const [enabled, setEnabled] = useState(plugin.enabled);
+  const [expanded, setExpanded] = useState(false);
 
-  const handleChange = () => {
+  const handleEnableToggle = () => {
     setEnabled(!enabled)
     dispatch({ type: "TOGGLE_ENABLED", payload: {piid: plugin.piid, enabled: !enabled} })
     console.table(plugin)
   }
+
+  const handleExpandedToggle = () => {
+    setExpanded(!expanded)
+  }
+
   return (
-    <TableRow>
+    <TableRow onClick={handleExpandedToggle}>
       <TableCell>
         <Switch
           checked={enabled}
-          onChange={handleChange}
+          onChange={handleEnableToggle}
           name="checkedA"
           inputProps={{ 'aria-label': 'secondary checkbox' }}
         />
