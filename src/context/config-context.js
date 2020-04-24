@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, createContext } from 'react';
 import { configValidator } from '../validation/config.validation';
 
 import axios from 'axios';
+// import CONFIG_DATA from './config.data';
 
 import { SET_CONFIG, TOGGLE_ENABLED } from './actionTypes';
 
@@ -11,7 +12,7 @@ const initialState = {
 
 const toggleEnabled = async (payload) => {
   try {
-    const res = await axios.post(`${process.env.REACT_APP_API_CONFIG}/${payload.piid}`, payload)
+    const res = await axios.post(`${process.env.REACT_APP_API_STAGE_CONFIG}/${payload.piid}`, payload)
     if (res.status === 200) {
       console.log("Response: ", res.data)
       return res.data
@@ -23,7 +24,7 @@ const toggleEnabled = async (payload) => {
 
 const getConfig = async () => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_API_CONFIG}?status=all`)
+    const res = await axios.get(`${process.env.REACT_APP_API_STAGE_CONFIG}?status=all`)
     if (res.status === 200) {
       console.log("Response: ", res.data)
       return res.data
@@ -39,6 +40,7 @@ const configReducer = (state, action) => {
       return {
         ...state,
         plugins: action.plugins
+        // plugins: CONFIG_DATA
       };
     case TOGGLE_ENABLED:
     toggleEnabled(action.payload)
