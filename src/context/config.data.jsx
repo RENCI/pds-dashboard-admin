@@ -165,6 +165,47 @@ const SAMPLE_PLUGINS = [
     "title": "Aminoglycoside dosing guidance"
   },
   {
+    "enabled": false,
+    "piid": "pdspi-guidance-example-4",
+    "pluginParameterDefaults": [
+      {
+        "id": "pdspi-guidance-example:4",
+        "legalValues": {
+          "enum": [],
+          "type": "string"
+        },
+        "parameterDescription": "",
+        "parameterValue": {
+          "value": ""
+        },
+        "title": ""
+      }
+    ],
+    "pluginSelectors": [],
+    "pluginType": "g",
+    "requiredPatientVariables": [
+      {
+        "id": "LOINC:12345-0",
+        "legalValues": {
+          "minimum": "0",
+          "type": "number"
+        },
+        "title": "Age",
+        "why": "Age is used to calculate the creatinine clearance. Dosing is lower for geriatric patient and contraindicated for pediatric patients"
+      },
+      {
+        "id": "LOINC:12345-5",
+        "legalValues": {
+          "minimum": "0",
+          "type": "number"
+        },
+        "title": "BMI",
+        "why": "BMI is used to calculate the creatinine clearance. Dosing is higher for patients with higher BMI"
+      }
+    ],
+    "title": "Aminoglycoside dosing guidance"
+  },
+  {
     "enabled": true,
     "piid": "pdspi-mapper-example-1",
     "pluginSelectors": [],
@@ -254,7 +295,16 @@ const SAMPLE_PLUGINS = [
   {
     "enabled": false,
     "piid": "pdspi-mapper-example-2",
-    "pluginSelectors": [],
+    "pluginSelectors": [
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Gentamicin",
+          "value": "rxCUI:1596450"
+        },
+        "title": "Drug"
+      }
+    ],
     "pluginType": "m",
     "pluginTypeTitle": "Mapping",
     "supportedPatientVariables": [
