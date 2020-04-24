@@ -1,0 +1,12 @@
+.container {
+  display: grid;
+  width: 100wv;
+  justify-items: center;
+  overflow: hidden;
+  grid-gap: 10px;
+}
+
+.grid-item {
+  background-color: rgb(230, 230, 230);
+  width: 85%;
+}
