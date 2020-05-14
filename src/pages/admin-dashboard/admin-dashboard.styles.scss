@@ -1,12 +1,12 @@
 .container {
   display: grid;
-  width: 100wv;
-  justify-items: center;
+  margin: 20px auto;
+  max-width: 1140px;
   overflow: hidden;
   grid-gap: 10px;
-}
-
-.grid-item {
-  background-color: rgb(230, 230, 230);
-  width: 85%;
+  background-color: #e9ecef;
+  h1 {
+    font-size: 2.6rem;
+    font-weight: 400;
+  }
 }

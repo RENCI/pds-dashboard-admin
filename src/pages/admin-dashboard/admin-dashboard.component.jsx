@@ -10,28 +10,31 @@ const AdminDashboard = () => {
   const { plugins } = context.state;
   return (
     <div className="container">
+      <div className="grid-item">
+        <h1 className="title">PDS Admin Dashboard</h1>
+      </div>
       <CustomTable
         title={"Mapping Plugins"}
         tableHeaders={[
-          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid}/>},
+          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid} /> },
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" }
         ]}
         plugins={plugins.filter(plugins => plugins.pluginType === 'm')}
       />
       <CustomTable
-      title={"Guidance Plugins"}
+        title={"Guidance Plugins"}
         tableHeaders={[
-          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid}/>},
+          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid} /> },
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" }
         ]}
         plugins={plugins.filter(plugins => plugins.pluginType === 'g')}
       />
       <CustomTable
-      title={"FHIR Plugins"}
+        title={"FHIR Plugins"}
         tableHeaders={[
-          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid}/>},
+          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid} /> },
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" }
         ]}
