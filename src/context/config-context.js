@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, createContext } from 'react';
 import { configValidator } from '../validation/config.validation';
 
 import axios from 'axios';
-// import CONFIG_DATA from './config.data';
+import CONFIG_DATA from './config.data';
 
 import { SET_CONFIG, TOGGLE_ENABLED } from './actionTypes';
 
@@ -39,8 +39,8 @@ const configReducer = (state, action) => {
     case SET_CONFIG:
       return {
         ...state,
-        plugins: action.plugins
-        // plugins: CONFIG_DATA
+        // plugins: action.plugins
+        plugins: CONFIG_DATA
       };
     case TOGGLE_ENABLED:
     toggleEnabled(action.payload)

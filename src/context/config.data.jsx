@@ -1,4 +1,6 @@
 const SAMPLE_PLUGINS = [
+  // *** GUIDANCE *** \\
+  // *** AMINOGLYCOSIDE ANTIBIOTICS *** \\
   {
     "enabled": true,
     "piid": "pdspi-guidance-example-1",
@@ -205,6 +207,70 @@ const SAMPLE_PLUGINS = [
     ],
     "title": "Aminoglycoside dosing guidance"
   },
+  // *** DOAC *** \\
+  {
+    "enabled": true,
+    "piid": "pdspi-guidance-doac-example-1",
+    "pluginParameterDefaults": [
+      {
+        "id": "pdspi-guidance-doac-example:1",
+        "legalValues": {
+          "enum": [
+            "Nonvalvular AF - stroke prophylaxis",
+            "VTE treatment",
+            "VTE primary prophylaxis"
+          ],
+          "type": "string"
+        },
+        "parameterDescription": "This calculator provides clinical decision support for treatment venous thromboembolism (VTE including deep vein thrombosis and pulmonary embolism), prophylaxis is the setting of non valvular atrial fibrillation.",
+        "parameterValue": {
+          "value": "Nonvalvular AF - stroke prophylaxis"
+        },
+        "title": "Standard dosing of direct oral anticoagulants"
+      }
+    ],
+    "pluginSelectors": [
+      {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Nonvalvular AF - stroke prophylaxis",
+          "value": "ICD-10CM:I48.91"
+        },
+        "title": "Indication"
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Dabigatran",
+          "value": "rxCUI:1596450"
+        },
+        "title": "Drug"
+      }
+    ],
+    "pluginType": "g",
+    "requiredPatientVariables": [
+      {
+        "id": "LOINC:30525-0",
+        "legalValues": {
+          "minimum": "0",
+          "type": "number"
+        },
+        "title": "Age",
+        "why": "Age is used to calculate the creatinine clearance. Dosing is lower for geriatric patient and contraindicated for pediatric patients"
+      },
+      {
+        "id": "LOINC:39156-5",
+        "legalValues": {
+          "minimum": "0",
+          "type": "number"
+        },
+        "title": "BMI",
+        "why": "BMI is used to calculate the creatinine clearance. Dosing is higher for patients with higher BMI"
+      }
+    ],
+    "title": "DOAC dosing guidance"
+  },
+  // *** MAPPING *** \\
   {
     "enabled": true,
     "piid": "pdspi-mapper-example-1",
@@ -475,6 +541,7 @@ const SAMPLE_PLUGINS = [
     ],
     "title": "ICD-9cm to ICD-10cm variable mapper"
   },
+  // *** FIHR *** \\
   {
     "enabled": true,
     "piid": "pdspi-fhir-example",
@@ -484,4 +551,4 @@ const SAMPLE_PLUGINS = [
     "title": "FHIR data provider"
   }
 ];
- export default SAMPLE_PLUGINS;
+export default SAMPLE_PLUGINS;
