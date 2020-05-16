@@ -9,4 +9,24 @@
     font-size: 2.6rem;
     font-weight: 400;
   }
+  .data-source-selection {
+    color: #fff !important;
+    width: 10.2rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .example-data {
+    background-color: #8B008B;
+  }
+  .config-data {
+    background-color: #FF3386;
+  }
 }
