@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MaterialTable, { MTableToolbar } from 'material-table';
+import SelectorList from '../selector-list/selector-list.component';
 import PluginDetails from '../plugin-details/plugin-details.component';
 
 import './custom-table.styles.scss';
 
 const CustomTable = ({ plugins, title, tableHeaders, pluginKeys }) => {
-  const [selectors, setSelectors] = useState([]);
-  const [data, setData] = useState([]);
-  
-  plugins.map(plugin => data.push(
-    { enabled: plugin.enabled, piid: plugin.piid, pluginSelectors: plugin.pluginSelectors, supportedPatientVariables: plugin.supportedPatientVariables, title: plugin.title }
-  ))
 
   return (
     <div className="grid-item">
       <MaterialTable
         title={title}
         columns={tableHeaders}
-        data={data}
+        data={plugins}
         components={{
           Toolbar: props => (
             <div>
               <MTableToolbar {...props} />
-              <input placeholder="Selector" /><button>+</button>
+              <SelectorList/>
             </div>
           ),
         }}
