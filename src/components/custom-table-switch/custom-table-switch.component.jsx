@@ -19,7 +19,7 @@ const CustomTableSwitch = ({ enabled, piid }) => {
       checked={enabledState}
       onChange={handleEnableToggle}
       name="checkedA"
-      inputProps={{ 'aria-label': 'secondary checkbox' }}
+      inputProps={{ 'aria-label': 'checkbox' }}
     />
   )
 };

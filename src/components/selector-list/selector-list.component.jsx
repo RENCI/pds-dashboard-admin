@@ -37,7 +37,7 @@ const SelectorList = () => {
         <span>Plugins are filtered with the following selectors</span>
         <span>Click on a selector to stop filtering</span>
         <div className="filter-list">
-          {filterSelectorList.map((selector, i) => <div className="chip" key={selector} onClick={() => handleRemove(i)}>{selector}</div>)}
+          {filterSelectorList.map((selector, i) => <div className="chip" key={selector} onClick={() => handleRemove(i)}><span>{selector}</span></div>)}
         </div>
       </div>
     </div>

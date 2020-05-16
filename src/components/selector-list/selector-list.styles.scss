@@ -1,19 +1,24 @@
 
 .chip {
   color: #fff !important;
-  background-color: #8B008B;
+  background-color: #007bff;
   text-transform: uppercase;
   text-decoration: none;
+  width: 8rem;
   margin: 2px;
   padding: 10px;
   border-radius: 50px;
   display: inline-block;
+  text-align: center;
   border: none;
   transition: all 0.4s ease 0s;
   &:hover {
     cursor: pointer;
     background-color: rgba($color: red, $alpha: 0.8)
   }
+  &:hover span {display:none}
+  &:hover:before {content:"Remove"}
+
 }
 
 .filter-panel {
@@ -40,7 +45,7 @@
 
 .add-selector {
   color: #fff !important;
-  background-color: #8B008B;
+  background-color: #007bff;
   text-transform: uppercase;
   text-decoration: none;
   height: 1.2rem;
@@ -55,6 +60,6 @@
   transition: all 0.4s ease 0s;
   &:hover {
     cursor: pointer;
-    background-color: rgba($color: rgb(170, 0, 170), $alpha: 0.8)
+    background-color: rgba($color: #007bff, $alpha: 0.5)
   }
 }
