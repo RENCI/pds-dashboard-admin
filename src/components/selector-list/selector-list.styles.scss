@@ -1,0 +1,60 @@
+
+.chip {
+  color: #fff !important;
+  background-color: #8B008B;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin: 2px;
+  padding: 10px;
+  border-radius: 50px;
+  display: inline-block;
+  border: none;
+  transition: all 0.4s ease 0s;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba($color: red, $alpha: 0.8)
+  }
+}
+
+.filter-panel {
+  margin: 20px 10px;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-list {
+  margin: 5px 5px;
+  padding: 5px 10px;
+}
+
+.form-label {
+  padding: 5px 0;
+  font-size: 16px
+}
+
+.selector-input {
+  height: 2rem;
+  width: 8rem;
+}
+
+.add-selector {
+  color: #fff !important;
+  background-color: #8B008B;
+  text-transform: uppercase;
+  text-decoration: none;
+  height: 1.2rem;
+  width: 1.2rem;
+  text-align: center;
+  font-weight: bolder;
+  margin: 2px;
+  padding: 10px;
+  border-radius: 5%;
+  display: inline-block;
+  border: none;
+  transition: all 0.4s ease 0s;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba($color: rgb(170, 0, 170), $alpha: 0.8)
+  }
+}
