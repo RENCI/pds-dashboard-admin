@@ -75,7 +75,6 @@ export const ConfigProvider = ({ children }) => {
         console.error(error);
       }
     })();
-
   }, []);
 
   return (

@@ -3,10 +3,10 @@ const SAMPLE_PLUGINS = [
   // *** AMINOGLYCOSIDE ANTIBIOTICS *** \\
   {
     "enabled": true,
-    "piid": "pdspi-guidance-example-1",
+    "piid": "pdspi-guidance-aminoglycoside-example-1",
     "pluginParameterDefaults": [
       {
-        "id": "pdspi-guidance-example:1",
+        "id": "pdspi-guidance-aminoglycoside-example:1",
         "legalValues": {
           "enum": [
             "Hartford",
@@ -25,13 +25,29 @@ const SAMPLE_PLUGINS = [
     ],
     "pluginSelectors": [
       {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Pseudomonas (aeruginosa)",
+          "value": "ICD-10CM:B96.5"
+        },
+        "title": "Indication"
+      },
+      {
         "id": "dosing.rxCUI",
         "selectorValue": {
           "title": "Gentamicin",
           "value": "rxCUI:1596450"
         },
         "title": "Drug"
-      }
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Tobramycin",
+          "value": "rxCUI:220329"
+        },
+        "title": "Drug"
+      },
     ],
     "pluginType": "g",
     "requiredPatientVariables": [
@@ -58,10 +74,10 @@ const SAMPLE_PLUGINS = [
   },
   {
     "enabled": true,
-    "piid": "pdspi-guidance-example-2",
+    "piid": "pdspi-guidance-aminoglycoside-example-2",
     "pluginParameterDefaults": [
       {
-        "id": "pdspi-guidance-example:2",
+        "id": "pdspi-guidance-aminoglycoside-example:2",
         "legalValues": {
           "enum": [
             "Hartford",
@@ -80,10 +96,26 @@ const SAMPLE_PLUGINS = [
     ],
     "pluginSelectors": [
       {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Acute and subacute infective endocarditis",
+          "value": "ICD-10CM:I33.0"
+        },
+        "title": "Indication"
+      },
+      {
         "id": "dosing.rxCUI",
         "selectorValue": {
           "title": "Gentamicin",
           "value": "rxCUI:1596450"
+        },
+        "title": "Drug"
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Tobramycin",
+          "value": "rxCUI:220329"
         },
         "title": "Drug"
       }
@@ -113,10 +145,10 @@ const SAMPLE_PLUGINS = [
   },
   {
     "enabled": false,
-    "piid": "pdspi-guidance-example-3",
+    "piid": "pdspi-guidance-aminoglycoside-example-3",
     "pluginParameterDefaults": [
       {
-        "id": "pdspi-guidance-example:3",
+        "id": "pdspi-guidance-aminoglycoside-example:3",
         "legalValues": {
           "enum": [
             "Hartford",
@@ -135,55 +167,38 @@ const SAMPLE_PLUGINS = [
     ],
     "pluginSelectors": [
       {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Pseudomonas (aeruginosa)",
+          "value": "ICD-10CM:B96.5"
+        },
+        "title": "Indication"
+      },
+      {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Acute and subacute infective endocarditis",
+          "value": "ICD-10CM:I33.0"
+        },
+        "title": "Indication"
+      },
+      {
         "id": "dosing.rxCUI",
         "selectorValue": {
           "title": "Gentamicin",
           "value": "rxCUI:1596450"
         },
         "title": "Drug"
-      }
-    ],
-    "pluginType": "g",
-    "requiredPatientVariables": [
-      {
-        "id": "LOINC:12345-0",
-        "legalValues": {
-          "minimum": "0",
-          "type": "number"
-        },
-        "title": "Age",
-        "why": "Age is used to calculate the creatinine clearance. Dosing is lower for geriatric patient and contraindicated for pediatric patients"
       },
       {
-        "id": "LOINC:12345-5",
-        "legalValues": {
-          "minimum": "0",
-          "type": "number"
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Tobramycin",
+          "value": "rxCUI:220329"
         },
-        "title": "BMI",
-        "why": "BMI is used to calculate the creatinine clearance. Dosing is higher for patients with higher BMI"
+        "title": "Drug"
       }
     ],
-    "title": "Aminoglycoside dosing guidance"
-  },
-  {
-    "enabled": false,
-    "piid": "pdspi-guidance-example-4",
-    "pluginParameterDefaults": [
-      {
-        "id": "pdspi-guidance-example:4",
-        "legalValues": {
-          "enum": [],
-          "type": "string"
-        },
-        "parameterDescription": "",
-        "parameterValue": {
-          "value": ""
-        },
-        "title": ""
-      }
-    ],
-    "pluginSelectors": [],
     "pluginType": "g",
     "requiredPatientVariables": [
       {
@@ -233,8 +248,24 @@ const SAMPLE_PLUGINS = [
       {
         "id": "ICD-10CM",
         "selectorValue": {
-          "title": "Nonvalvular AF - stroke prophylaxis",
+          "title": "Unspecified atrial fibrillation",
           "value": "ICD-10CM:I48.91"
+        },
+        "title": "Indication"
+      },
+      {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Chronic atrial fibrillation",
+          "value": "ICD-10CM:I48.2"
+        },
+        "title": "Indication"
+      },
+      {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Acute embolism and thrombosis of deep veins of lower extremity",
+          "value": "ICD-10CM:I82.4"
         },
         "title": "Indication"
       },
@@ -243,6 +274,22 @@ const SAMPLE_PLUGINS = [
         "selectorValue": {
           "title": "Dabigatran",
           "value": "rxCUI:1596450"
+        },
+        "title": "Drug"
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Apixaban",
+          "value": "rxCUI:1364430"
+        },
+        "title": "Drug"
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Rivaroxaban",
+          "value": "rxCUI:1232088"
         },
         "title": "Drug"
       }
@@ -269,6 +316,101 @@ const SAMPLE_PLUGINS = [
       }
     ],
     "title": "DOAC dosing guidance"
+  },
+  // *** Calcium Channel Blocker *** \\
+  {
+    "enabled": true,
+    "piid": "pdspi-guidance-calciumChannelBlocker-example-1",
+    "pluginParameterDefaults": [
+      {
+        "id": "pdspi-guidance-calciumChannelBlocker-example:1",
+        "legalValues": {
+          "enum": [
+            "Nonvalvular AF - stroke prophylaxis",
+            "VTE treatment",
+            "VTE primary prophylaxis"
+          ],
+          "type": "string"
+        },
+        "parameterDescription": "This calculator provides clinical decision support for treatment venous thromboembolism (VTE including deep vein thrombosis and pulmonary embolism), prophylaxis is the setting of non valvular atrial fibrillation.",
+        "parameterValue": {
+          "value": "Nonvalvular AF - stroke prophylaxis"
+        },
+        "title": "Standard dosing of direct oral anticoagulants"
+      }
+    ],
+    "pluginSelectors": [
+      {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Unspecified atrial fibrillation",
+          "value": "ICD-10CM:I48.91"
+        },
+        "title": "Indication"
+      },
+      {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Persistent atrial fibrillation",
+          "value": "ICD-10CM:I48.1"
+        },
+        "title": "Indication"
+      },
+      {
+        "id": "ICD-10CM",
+        "selectorValue": {
+          "title": "Chronic atrial fibrillation",
+          "value": "ICD-10CM:I48.2"
+        },
+        "title": "Indication"
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Cardizem",
+          "value": "rxCUI:203494"
+        },
+        "title": "Drug"
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Digoxin",
+          "value": "rxCUI:208707"
+        },
+        "title": "Drug"
+      },
+      {
+        "id": "dosing.rxCUI",
+        "selectorValue": {
+          "title": "Metoprolol",
+          "value": "rxCUI:1012996"
+        },
+        "title": "Drug"
+      }
+    ],
+    "pluginType": "g",
+    "requiredPatientVariables": [
+      {
+        "id": "LOINC:30525-0",
+        "legalValues": {
+          "minimum": "0",
+          "type": "number"
+        },
+        "title": "Age",
+        "why": "Age is used to calculate the creatinine clearance. Dosing is lower for geriatric patient and contraindicated for pediatric patients"
+      },
+      {
+        "id": "LOINC:39156-5",
+        "legalValues": {
+          "minimum": "0",
+          "type": "number"
+        },
+        "title": "BMI",
+        "why": "BMI is used to calculate the creatinine clearance. Dosing is higher for patients with higher BMI"
+      }
+    ],
+    "title": "Calcium channel blocker dosing guidance"
   },
   // *** MAPPING *** \\
   {
