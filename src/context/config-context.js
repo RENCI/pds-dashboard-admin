@@ -4,10 +4,11 @@ import { configValidator } from '../validation/config.validation';
 import axios from 'axios';
 import CONFIG_DATA from './config.data';
 
-import { SET_CONFIG, TOGGLE_ENABLED } from './actionTypes';
+import { SET_CONFIG, TOGGLE_ENABLED, SET_SELECTORS } from './actionTypes';
 
 const initialState = {
-  plugins: []
+  plugins: [],
+  selectors: []
 };
 
 const toggleEnabled = async (payload) => {
@@ -15,24 +16,36 @@ const toggleEnabled = async (payload) => {
     const res = await axios.post(`${process.env.REACT_APP_API_STAGE_CONFIG}/${payload.piid}`, payload)
     if (res.status === 200) {
       console.log("Response: ", res.data)
-      return res.data
+      return res.data;
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 
 const getConfig = async () => {
   try {
     const res = await axios.get(`${process.env.REACT_APP_API_STAGE_CONFIG}?status=all`)
     if (res.status === 200) {
-      console.log("Response: ", res.data)
-      return res.data
+      console.log("Config: ", res.data)
+      return res.data;
     }
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
+
+const getSelectors = async () => {
+  try {
+    const res = await axios.get(`http://pds.renci.org:8080/v1/plugin/pds/selectors`)
+    if (res.status === 200) {
+      console.log("Selectors: ", res.data)
+      return res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const configReducer = (state, action) => {
   switch (action.type) {
@@ -47,9 +60,14 @@ const configReducer = (state, action) => {
       return {
         ...state
       };
+    case SET_SELECTORS:
+      return {
+        ...state,
+        selectors: action.selectors
+      };
     default:
       throw new Error("Invalid config action: " + action.type);
-  }
+  };
 };
 
 export const ConfigContext = createContext(initialState);
@@ -69,6 +87,22 @@ export const ConfigProvider = ({ children }) => {
           });
         } else {
           throw new Error("Config data is invalid: " + res);
+        }
+      }
+      catch (error) {
+        console.error(error);
+      }
+
+      try {
+        const res = await getSelectors();
+
+        if (configValidator(res)) {
+          dispatch({
+            type: SET_SELECTORS,
+            selectors: res
+          });
+        } else {
+          throw new Error("Selector data is invalid: " + res);
         }
       }
       catch (error) {
