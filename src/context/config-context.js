@@ -8,14 +8,15 @@ import { SET_CONFIG, TOGGLE_ENABLED, SET_SELECTORS } from './actionTypes';
 
 const initialState = {
   plugins: [],
-  selectors: []
+  selectors: [],
+  examplePlugins: CONFIG_DATA
 };
 
 const toggleEnabled = async (payload) => {
   try {
     const res = await axios.post(`${process.env.REACT_APP_API_STAGE_CONFIG}/${payload.piid}`, payload)
     if (res.status === 200) {
-      console.log("Response: ", res.data)
+      console.log("Enable Plugin Response: ", res.status)
       return res.data;
     }
   } catch (error) {
@@ -52,11 +53,10 @@ const configReducer = (state, action) => {
     case SET_CONFIG:
       return {
         ...state,
-        // plugins: action.plugins
-        plugins: CONFIG_DATA
+        plugins: action.plugins
       };
     case TOGGLE_ENABLED:
-    toggleEnabled(action.payload)
+      toggleEnabled(action.payload)
       return {
         ...state
       };
