@@ -16,7 +16,7 @@ const toggleEnabled = async (payload) => {
   try {
     const res = await axios.post(`${process.env.REACT_APP_API_STAGE_CONFIG}/${payload.piid}`, payload)
     if (res.status === 200) {
-      console.log("Enable Plugin Response: ", res.status)
+      console.log("Enable Plugin Response: ", payload.piid)
       return res.data;
     }
   } catch (error) {
