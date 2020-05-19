@@ -34,6 +34,7 @@ const AdminDashboard = () => {
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'm') : plugins.filter(plugins => plugins.pluginType === 'm')}
         defaultPlugin={plugins.filter(plugins => plugins.pluginType === 'md')}
+        showSelectors={false}
       />
       <CustomTable
         title={"Guidance Plugins"}
@@ -43,6 +44,7 @@ const AdminDashboard = () => {
           { title: "Title", field: "title" }
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'g') : plugins.filter(plugins => plugins.pluginType === 'g')}
+        showSelectors={true}
       />
       <CustomTable
         title={"Convenience Plugins"}
@@ -52,6 +54,7 @@ const AdminDashboard = () => {
           { title: "Title", field: "title" }
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'c') : plugins.filter(plugins => plugins.pluginType === 'c')}
+        showSelectors={false}
       />
       <CustomTable
         title={"FHIR Plugins"}
@@ -62,6 +65,7 @@ const AdminDashboard = () => {
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'f') : plugins.filter(plugins => plugins.pluginType === 'f')}
         defaultPlugin={plugins.filter(plugins => plugins.pluginType === 'fd')}
+        showSelectors={false}
       />
     </div>
   );
