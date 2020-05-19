@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import './selector-list.styles.scss';
 
-const SelectorList = () => {
+const SelectorList = ({ filterSelectorList, setFilterSelectedList }) => {
   const [value, setValue] = useState('');
-  const [filterSelectorList, setFilterSelectedList] = useState(['ICD-10CM:I48.91']);
   const handleSubmit = e => {
     e.preventDefault()
     if (value === "") {
@@ -20,7 +19,7 @@ const SelectorList = () => {
   return (
     <div className="grid-item">
       <form onSubmit={handleSubmit}>
-        <div className="form-label">Selectors</div>
+        <div className="form-label">Add Selectors</div>
         <input
           name="addSelector"
           type="text"
