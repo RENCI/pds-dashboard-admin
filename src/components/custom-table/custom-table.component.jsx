@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MaterialTable, { MTableToolbar } from 'material-table';
 import SelectorList from '../selector-list/selector-list.component';
 import PluginDetails from '../plugin-details/plugin-details.component';
 
 import './custom-table.styles.scss';
 
-const CustomTable = ({ plugins, title, tableHeaders, pluginKeys }) => {
+const CustomTable = ({ plugins, title, tableHeaders, showSelectors }) => {
+  const [filterSelectorList, setFilterSelectedList] = useState(['ICD-10CM:I48.91']);
 
   return (
     <div className="grid-item">
@@ -17,7 +18,7 @@ const CustomTable = ({ plugins, title, tableHeaders, pluginKeys }) => {
           Toolbar: props => (
             <div>
               <MTableToolbar {...props} />
-              <SelectorList/>
+              {showSelectors ? <SelectorList filterSelectorList={filterSelectorList} setFilterSelectedList={setFilterSelectedList} /> : null }
             </div>
           ),
         }}
