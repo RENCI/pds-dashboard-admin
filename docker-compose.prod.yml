@@ -5,10 +5,9 @@ services:
     container_name: frontend
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     volumes:
       - '.:/app'
       - '/app/node_modules'
     ports:
       - 8081:3000
-    stdin_open: true
