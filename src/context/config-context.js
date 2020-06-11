@@ -44,7 +44,7 @@ const getSelectors = async () => {
       return res.data;
     }
   } catch (error) {
-    console.error(error);
+    throw new Error("Unable to get selectors: ", error);
   }
 };
 
