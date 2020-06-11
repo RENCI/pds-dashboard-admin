@@ -12,3 +12,10 @@ services:
     ports:
       - 8081:3000
     stdin_open: true
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: ${IPAM_CONFIG_SUBNET}
