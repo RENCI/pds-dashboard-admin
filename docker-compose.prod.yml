@@ -11,6 +11,8 @@ services:
       - '/app/node_modules'
     ports:
       - 8081:3000
+    env_file:
+      - .env.production
     stdin_open: true
 networks:
   default:
