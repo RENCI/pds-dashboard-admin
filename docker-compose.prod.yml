@@ -18,4 +18,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: ${IPAM_CONFIG_SUBNET}
+        - subnet: ${IPAM_CONFIG_SUBNET_ADMIN_DASHBOARD}
