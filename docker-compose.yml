@@ -1,9 +1,8 @@
 version: '3.7'
 
 services:
-
   pds-dashboard-admin:
-    container_name: pds-dashboard-admin
+    container_name: default
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,6 +10,7 @@ services:
       - '.:/app'
       - '/app/node_modules'
     ports:
-      - 3001:3000
+      - $DEFAULT_PORT:3000
+    stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true

@@ -3,16 +3,15 @@ version: '3.7'
 services:
   pds-dashboard-admin:
     container_name: default
+    env_file: .env.production
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
     volumes:
       - '.:/app'
       - '/app/node_modules'
     ports:
-      - 8081:3000
-    env_file:
-      - .env.production
+      - ${DEFAULT_PORT}:3000
     stdin_open: true
 networks:
   default:
