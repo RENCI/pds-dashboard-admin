@@ -6,7 +6,7 @@ import './plugin-details.styles.scss';
 const PluginDetails = ({ selectors }) => {
   return (
     <Box ml={2}>
-      <h4>Plugin Selectors</h4>
+      { selectors.length > 0 ? <h4>Plugin Selectors</h4> : <h4>No Plugin Selectors</h4> }
       <ul>
         { selectors.map(selector => (
             <li key={selector.selectorValue.title}>
