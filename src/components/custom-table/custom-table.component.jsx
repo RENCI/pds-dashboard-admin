@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MaterialTable, { MTableToolbar } from 'material-table';
 import SelectorList from '../selector-list/selector-list.component';
 import PluginDetails from '../plugin-details/plugin-details.component';
