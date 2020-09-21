@@ -28,7 +28,7 @@ const AdminDashboard = () => {
       <CustomTable
         title={"Mapping Plugins"}
         tableHeaders={[
-          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid} pluginType={rowData.pluginType} /> },
+          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid", render: rowData => rowData.piid},
           { title: "Title", field: "title" }
         ]}
@@ -39,7 +39,7 @@ const AdminDashboard = () => {
       <CustomTable
         title={"Guidance Plugins"}
         tableHeaders={[
-          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid} pluginType={rowData.pluginType} /> },
+          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" }
         ]}
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
       <CustomTable
         title={"Convenience Plugins"}
         tableHeaders={[
-          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid} pluginType={rowData.pluginType} /> },
+          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" }
         ]}
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
       <CustomTable
         title={"FHIR Plugins"}
         tableHeaders={[
-          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch enabled={rowData.enabled} piid={rowData.piid} pluginType={rowData.pluginType} /> },
+          { title: "Enabled", field: 'enabled', render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" }
         ]}
