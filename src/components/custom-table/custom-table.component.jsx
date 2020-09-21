@@ -27,7 +27,7 @@ const CustomTable = ({ plugins, title, tableHeaders, showSelectors }) => {
             tooltip: 'Show Details',
             render: rowData => {
               return (
-                <PluginDetails selectors={rowData.pluginSelectors} />
+                <PluginDetails selectors={rowData.settingsDefaults.pluginSelectors} />
               )
             },
           },
