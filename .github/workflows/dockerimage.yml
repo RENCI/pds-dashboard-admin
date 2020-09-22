@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile.prod --tag pds-dashboard-admin:prod
+      run: docker build . --file Dockerfile-prod --tag pds-dashboard-admin:prod
