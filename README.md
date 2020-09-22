@@ -1,2 +1,2 @@
 # pds-dashboard-admin
-a dashboard for admin
+Administration dashboard for PDS
