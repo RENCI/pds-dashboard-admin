@@ -48,6 +48,23 @@ const getSelectors = async () => {
   }
 };
 
+const setSelectorPlugins = (selectors, plugins) => {
+  selectors.forEach(selector => {
+    selector.legalValues.enum.forEach(value => {
+      value.plugins = [];
+
+      plugins.filter(({ settingsDefaults }) => settingsDefaults.pluginSelectors).forEach(plugin => {
+        plugin.settingsDefaults.pluginSelectors.forEach(pluginSelector => {
+          if (selector.id === pluginSelector.id &&
+              value.value === pluginSelector.selectorValue.value) {
+            value.plugins.push(plugin);
+          }
+        });
+      });
+    });
+  });
+};
+
 const configReducer = (state, action) => {
   switch (action.type) {
     case SET_CONFIG:
@@ -61,6 +78,8 @@ const configReducer = (state, action) => {
         ...state
       };
     case SET_SELECTORS:
+      setSelectorPlugins(action.selectors, state.plugins);
+
       return {
         ...state,
         selectors: action.selectors
