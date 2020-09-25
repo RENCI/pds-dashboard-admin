@@ -14,9 +14,9 @@ const initialState = {
 
 const toggleEnabled = async (payload) => {
   try {
-    const res = await axios.post(`${process.env.REACT_APP_API_STAGE_CONFIG}/${payload.piid}`, payload)
+    const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${payload.piid}`, payload);
     if (res.status === 200) {
-      console.log("Enable Plugin Response: ", payload.piid)
+      console.log("Enable Plugin Response: ", payload.piid);
       return res.data;
     }
   } catch (error) {
@@ -26,9 +26,9 @@ const toggleEnabled = async (payload) => {
 
 const getConfig = async () => {
   try {
-    const res = await axios.get(`${process.env.REACT_APP_API_STAGE_CONFIG}?status=all`)
+    const res = await axios.get(`${process.env.REACT_APP_API_STAGE}/config`);
     if (res.status === 200) {
-      console.log("Config: ", res.data)
+      console.log("Config: ", res.data);
       return res.data;
     }
   } catch (error) {
@@ -38,9 +38,9 @@ const getConfig = async () => {
 
 const getSelectors = async () => {
   try {
-    const res = await axios.get(`http://pds.renci.org:8080/v1/plugin/pds/selectors`)
+    const res = await axios.get(`${process.env.REACT_APP_API_STAGE}/selectors`);
     if (res.status === 200) {
-      console.log("Selectors: ", res.data)
+      console.log("Selectors: ", res.data);
       return res.data;
     }
   } catch (error) {
