@@ -15,8 +15,6 @@ const AdminDashboard = () => {
   const toggleDataSource = () => {
     setUseExampleData(!useExampleData)
   }
-  
-console.log(context);
 
   return (
     <div className="container">

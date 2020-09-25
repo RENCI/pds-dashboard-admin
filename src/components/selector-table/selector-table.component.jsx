@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import MaterialTable, { MTableToolbar } from 'material-table';
+import React from 'react';
+import MaterialTable from 'material-table';
 
 import './selector-table.styles.scss';
 
