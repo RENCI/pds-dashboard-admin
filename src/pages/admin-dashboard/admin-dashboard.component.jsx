@@ -39,9 +39,9 @@ const AdminDashboard = () => {
       <CustomTable
         title={"Mapping Plugins"}
         tableHeaders={[
-          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid" },
-          { title: "Title", field: "title" }
+          { title: "Title", field: "title" },
+          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'm') : plugins.filter(plugins => plugins.pluginType === 'm')}
         defaultPlugin={plugins.filter(plugins => plugins.pluginType === 'md')}
@@ -50,9 +50,9 @@ const AdminDashboard = () => {
       <CustomTable
         title={"Guidance Plugins"}
         tableHeaders={[
-          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid" },
-          { title: "Title", field: "title" }
+          { title: "Title", field: "title" },
+          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'g') : plugins.filter(plugins => plugins.pluginType === 'g')}
         showSelectors={true}
@@ -60,9 +60,9 @@ const AdminDashboard = () => {
       <CustomTable
         title={"Convenience Plugins"}
         tableHeaders={[
-          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid" },
-          { title: "Title", field: "title" }
+          { title: "Title", field: "title" },
+          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'c') : plugins.filter(plugins => plugins.pluginType === 'c')}
         showSelectors={false}
@@ -70,9 +70,9 @@ const AdminDashboard = () => {
       <CustomTable
         title={"FHIR Plugins"}
         tableHeaders={[
-          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> },
           { title: "ID", field: "piid" },
-          { title: "Title", field: "title" }
+          { title: "Title", field: "title" },
+          { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === 'f') : plugins.filter(plugins => plugins.pluginType === 'f')}
         defaultPlugin={plugins.filter(plugins => plugins.pluginType === 'fd')}
