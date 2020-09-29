@@ -35,7 +35,7 @@ const SelectorTableValues = ({ legalValues }) => {
               flexShrink={1} 
               mr={ 2 }
             >
-              { value.value }{ value.title ? " | " + value.title : null }
+              { value.value }{ value.title ? " — " + value.title : null }
             </Box>
             <Box flexGrow={0} flexShrink={1}>
               { value.plugins.length > 0 ?
