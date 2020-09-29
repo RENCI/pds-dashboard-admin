@@ -1,7 +1,7 @@
-import React from 'react';
-import MaterialTable from 'material-table';
+import React from "react";
+import MaterialTable from "material-table";
 
-import './selector-table.styles.scss';
+import "./selector-table.styles.scss";
 
 const SelectorTable = ({ selectors, title, tableHeaders }) => {
    return (

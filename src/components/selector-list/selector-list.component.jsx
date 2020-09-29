@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import './selector-list.styles.scss';
+import React, { useState } from "react";
+import "./selector-list.styles.scss";
 
 const SelectorList = ({ filterSelectorList, setFilterSelectedList }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const handleSubmit = e => {
     e.preventDefault()
     if (value === "") {
       return alert("add selector")
     }
     filterSelectorList.push(value);
-    setValue('');
+    setValue("");
   }
 
   const handleRemove = (i) => {

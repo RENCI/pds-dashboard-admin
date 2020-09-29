@@ -61,6 +61,8 @@ const setSelectorPlugins = (selectors, plugins) => {
           }
         });
       });
+
+      value.defaultPlugin = value.plugins.length > 0 ? value.plugins[0] : null;
     });
   });
 };

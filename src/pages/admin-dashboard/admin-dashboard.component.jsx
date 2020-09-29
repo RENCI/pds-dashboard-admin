@@ -32,7 +32,7 @@ const AdminDashboard = () => {
         tableHeaders={[
           { title: "ID", field: "id" },
           { title: "Title", field: "title" },
-          { title: "Values", render: rowData => <SelectorTableValues {...rowData } /> }
+          { title: "Plugin Selection", render: rowData => <SelectorTableValues {...rowData } /> }
         ]}
         selectors={selectors}
       />
