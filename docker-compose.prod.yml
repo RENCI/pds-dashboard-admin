@@ -11,8 +11,9 @@ services:
       - '.:/app'
       - '/app/node_modules'
     ports:
-      - ${DEFAULT_PORT}:3000
+      - 443:443
     stdin_open: true
+
 networks:
   default:
     driver: bridge
