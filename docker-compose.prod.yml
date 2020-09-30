@@ -11,7 +11,7 @@ services:
       - '.:/app'
       - '/app/node_modules'
     ports:
-      - 443:443
+      - $DEFAULT_PORT:3000
     stdin_open: true
 
 networks:
