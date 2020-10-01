@@ -50,6 +50,7 @@ const SelectorTableValues = ({ legalValues }) => {
                     value={ value.defaultPlugin ? value.defaultPlugin.piid : "" }
                     onChange={ handleChange }
                   >
+                    <MenuItem value=""><em>None</em></MenuItem>
                     { value.plugins.map((plugin, i) => (
                       <MenuItem key={ i } value={ plugin.piid }>{ plugin.title }</MenuItem>
                     ))}
