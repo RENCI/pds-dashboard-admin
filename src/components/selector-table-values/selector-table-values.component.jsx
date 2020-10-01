@@ -27,11 +27,20 @@ const SelectorTableValues = ({ legalValues }) => {
             width={600}
           >
             <Box 
+              flexGrow={0} 
+              flexShrink={1}
+            >
+              { value.value }{ value.title ? " — " + value.title: null }
+            </Box>
+            <Box 
               flexGrow={1} 
               flexShrink={1} 
-              mr={ 2 }
+              mx={ 2 }
+              border={ 1 }
+              borderColor="#eee"
+              height="0px"
+              align="right"
             >
-              { value.value }{ value.title ? " — " + value.title : null }
             </Box>
             <Box flexGrow={0} flexShrink={1}>
               { value.plugins.length > 0 ?
