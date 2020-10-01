@@ -36,9 +36,8 @@ const SelectorTableValues = ({ legalValues }) => {
               flexGrow={1} 
               flexShrink={1} 
               mx={ 2 }
-              border={ 1 }
-              borderColor="#eee"
-              height="0px"
+              height="1px"
+              bgcolor="#e6e6e6"
               align="right"
             >
             </Box>
