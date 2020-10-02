@@ -7,17 +7,15 @@ import {
 
 const CustomTableSwitch = ({ enabled, piid, pluginType }) => {
   const { dispatch } = useContext(ConfigContext);
-  const [enabledState, setEnabledState] = useState(enabled);
 
   const handleEnableToggle = () => {
-    setEnabledState(!enabled)
-    dispatch({ type: "TOGGLE_ENABLED", payload: { enabled: enabled, piid: piid, pluginType: pluginType } })
+    dispatch({ type: "TOGGLE_ENABLED", payload: { enabled: !enabled, piid: piid, pluginType: pluginType } })
   }
 
   return (
     <Switch
-      checked={enabledState}
-      onChange={handleEnableToggle}
+      checked={ enabled }
+      onChange={ handleEnableToggle }
       color="primary"
       name="checkedA"
       inputProps={{ 'aria-label': 'checkbox' }}

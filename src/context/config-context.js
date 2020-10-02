@@ -69,16 +69,23 @@ const setSelectorPlugins = (selectors, plugins) => {
 
 const configReducer = (state, action) => {
   switch (action.type) {
-    case SET_CONFIG:
+    case SET_CONFIG:      
       return {
         ...state,
         plugins: action.plugins
       };
+
     case TOGGLE_ENABLED:
       toggleEnabled(action.payload)
+
+      // XXX: Should response in toggleEnabled contain updated plugin?
+      const plugin = state.plugins.find(plugin => plugin.piid === action.payload.piid);
+      plugin.enabled = action.payload.enabled;
+
       return {
         ...state
       };
+
     case SET_SELECTORS:
       setSelectorPlugins(action.selectors, state.plugins);
 
@@ -86,6 +93,7 @@ const configReducer = (state, action) => {
         ...state,
         selectors: action.selectors
       };
+
     default:
       throw new Error("Invalid config action: " + action.type);
   };
