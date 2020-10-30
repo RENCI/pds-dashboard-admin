@@ -4,9 +4,17 @@ import { configValidator } from '../validation/config.validation';
 import axios from 'axios';
 import CONFIG_DATA from './config.data';
 
-import { SET_CONFIG, TOGGLE_ENABLED, SET_SELECTORS } from './actionTypes';
+import { 
+  SET_DEFAULT_CONFIG, 
+  SET_CONFIG, 
+  SET_SELECTORS, 
+  SET_PLUGINS, 
+  TOGGLE_ENABLED 
+} from './actionTypes';
 
 const initialState = {
+  defaultConfig: [],
+  config: [],
   plugins: [],
   selectors: [],
   examplePlugins: CONFIG_DATA
@@ -17,6 +25,18 @@ const toggleEnabled = async (payload) => {
     const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${payload.piid}`, payload);
     if (res.status === 200) {
       console.log("Enable Plugin Response: ", payload.piid);
+      return res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getDefaultConfig = async () => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API_STAGE}/configFactoryDefault`);
+    if (res.status === 200) {
+      console.log("Default config: ", res.data);
       return res.data;
     }
   } catch (error) {
@@ -69,10 +89,30 @@ const setSelectorPlugins = (selectors, plugins) => {
 
 const configReducer = (state, action) => {
   switch (action.type) {
+    case SET_DEFAULT_CONFIG:
+      return {
+        ...state,
+        defaultConfig: action.config
+      };
+
     case SET_CONFIG:      
       return {
         ...state,
+        config: action.config
+      };
+
+    case SET_PLUGINS:
+      return {
+        ...state,
         plugins: action.plugins
+      };
+
+    case SET_SELECTORS:
+      setSelectorPlugins(action.selectors, state.plugins);
+
+      return {
+        ...state,
+        selectors: action.selectors
       };
 
     case TOGGLE_ENABLED:
@@ -84,14 +124,6 @@ const configReducer = (state, action) => {
 
       return {
         ...state
-      };
-
-    case SET_SELECTORS:
-      setSelectorPlugins(action.selectors, state.plugins);
-
-      return {
-        ...state,
-        selectors: action.selectors
       };
 
     default:
@@ -107,6 +139,42 @@ export const ConfigProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       try {
+        const res = await getDefaultConfig();
+
+        if (configValidator(res)) {
+          dispatch({
+            type: SET_DEFAULT_CONFIG,
+            config: res
+          });
+        } 
+        else {
+          throw new Error("Default config data is invalid: " + res);
+        }
+
+        // XXX: Temporary fix: get plugins from default config
+        const plugins = res.reduce((all, current) => {
+          current.plugins.forEach(plugin => {
+            if (!all.find(({ piid }) => piid === plugin.piid)) {
+              all.push(plugin);
+            }
+          });
+
+          return all;
+        }, []);
+
+        dispatch({
+          type: SET_PLUGINS,
+          plugins: plugins
+        });
+
+        console.log(plugins)
+      }
+      catch (error) {
+        console.log(error);
+      } 
+
+/*      
+      try {
         const res = await getConfig();
 
         if (configValidator(res)) {
@@ -114,14 +182,15 @@ export const ConfigProvider = ({ children }) => {
             type: SET_CONFIG,
             plugins: res
           });
-        } else {
+        } 
+        else {
           throw new Error("Config data is invalid: " + res);
         }
       }
       catch (error) {
         console.error(error);
       }
-
+*/
       try {
         const res = await getSelectors();
 
@@ -130,13 +199,14 @@ export const ConfigProvider = ({ children }) => {
             type: SET_SELECTORS,
             selectors: res
           });
-        } else {
+        } 
+        else {
           throw new Error("Selector data is invalid: " + res);
         }
       }
       catch (error) {
         console.error(error);
-      }
+      }      
     })();
   }, []);
 

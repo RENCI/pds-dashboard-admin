@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { ConfigContext } from '../../context/config-context';
 
-import {
-  Switch
-} from "@material-ui/core";
+import { Switch } from "@material-ui/core";
 
 const CustomTableSwitch = ({ enabled, piid, pluginType }) => {
   const { dispatch } = useContext(ConfigContext);
