@@ -3,13 +3,13 @@ import MaterialTable from "material-table";
 
 import "./selector-table.styles.scss";
 
-const SelectorTable = ({ selectors, title, tableHeaders }) => {
+const SelectorTable = ({ config, title, tableHeaders }) => {
    return (
     <div className="grid-item">
       <MaterialTable
-        title={title}
-        columns={tableHeaders}
-        data={selectors}
+        title={ title }
+        columns={ tableHeaders }
+        data={ config }
       />
     </div>
   )

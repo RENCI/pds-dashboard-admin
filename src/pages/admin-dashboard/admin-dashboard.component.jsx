@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { ConfigContext } from '../../context/config-context';
 import SelectorTable from '../../components/selector-table/selector-table.component';
-import SelectorTableValues from '../../components/selector-table-values/selector-table-values.component';
+import SelectorTableSelectors from '../../components/selector-table-selectors/selector-table-selectors.component';
+import SelectorTablePlugins from '../../components/selector-table-plugins/selector-table-plugins.component';
 import CustomTable from '../../components/custom-table/custom-table.component';
 import CustomTableSwitch from '../../components/custom-table-switch/custom-table-switch.component';
 
@@ -9,7 +10,7 @@ import './admin-dashboard.styles.scss';
 
 const AdminDashboard = () => {
   const context = useContext(ConfigContext);
-  const { selectors, plugins, examplePlugins } = context.state;
+  const { defaultConfig, plugins, examplePlugins } = context.state;
   const [ useExampleData, setUseExampleData ] = useState(false);
 
   const toggleDataSource = () => {
@@ -30,11 +31,10 @@ const AdminDashboard = () => {
       <SelectorTable
         title={"Selectors"}
         tableHeaders={[
-          { title: "ID", field: "id" },
-          { title: "Title", field: "title" },
-          { title: "Plugin Selection", render: rowData => <SelectorTableValues {...rowData } /> }
+          { title: "Selectors", render: rowData => <SelectorTableSelectors { ...rowData.selectors } /> },
+          { title: "Plugin", render: rowData => <SelectorTablePlugins {...rowData.plugins } /> }
         ]}
-        selectors={selectors}
+        config={ defaultConfig }
       />
       <CustomTable
         title={"Mapping Plugins"}

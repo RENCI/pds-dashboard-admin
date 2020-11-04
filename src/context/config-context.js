@@ -151,7 +151,7 @@ export const ConfigProvider = ({ children }) => {
           throw new Error("Default config data is invalid: " + res);
         }
 
-        // XXX: Temporary fix: get plugins from default config
+        // XXX: Temporary fix: get plugins from default config (commented out below)
         const plugins = res.reduce((all, current) => {
           current.plugins.forEach(plugin => {
             if (!all.find(({ piid }) => piid === plugin.piid)) {
