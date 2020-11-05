@@ -1,4 +1,4 @@
-export const SET_DEFAULT_CONFIG = 'SET_CONFIG';
+export const SET_DEFAULT_CONFIG = 'SET_DEFAULT_CONFIG';
 export const SET_CONFIG = 'SET_CONFIG';
 export const SET_PLUGINS = 'SET_PLUGINS';
 export const SET_SELECTORS = 'SET_SELECTORS';

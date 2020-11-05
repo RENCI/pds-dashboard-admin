@@ -10,7 +10,7 @@ import './admin-dashboard.styles.scss';
 
 const AdminDashboard = () => {
   const context = useContext(ConfigContext);
-  const { defaultConfig, plugins, examplePlugins } = context.state;
+  const { config, plugins, examplePlugins } = context.state;
   const [ useExampleData, setUseExampleData ] = useState(false);
 
   const toggleDataSource = () => {
@@ -31,10 +31,10 @@ const AdminDashboard = () => {
       <SelectorTable
         title={"Selectors"}
         tableHeaders={[
-          { title: "Selectors", render: rowData => <SelectorTableSelectors { ...rowData.selectors } /> },
-          { title: "Plugin", render: rowData => <SelectorTablePlugins {...rowData.plugins } /> }
+          { title: "Selectors", render: rowData => <SelectorTableSelectors { ...rowData } /> },
+          { title: "Plugin", render: rowData => <SelectorTablePlugins {...rowData } /> }
         ]}
-        config={ defaultConfig }
+        config={ config }
       />
       <CustomTable
         title={"Mapping Plugins"}

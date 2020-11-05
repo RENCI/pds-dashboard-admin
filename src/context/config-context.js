@@ -87,6 +87,26 @@ const setSelectorPlugins = (selectors, plugins) => {
   });
 };
 
+const selectorCompare = (selector1, selector2) => {
+  return selector1.id === selector2.id && selector1.selectorValue.value === selector2.selectorValue.value;
+};
+
+const mappingCompare = (mapping1, mapping2) => {
+  return mapping1.selectors.reduce((accum, selector1) => {
+    return accum && mapping2.selectors.some(selector2 => selectorCompare(selector1, selector2))
+  }, true);
+}
+
+const copyConfigPlugins = (config, defaultConfig) => {
+  config.forEach(mapping => {
+    const defaultMapping = defaultConfig.find(defaultMapping => mappingCompare(mapping, defaultMapping));
+
+    if (defaultMapping) {
+      mapping.plugins = [...defaultMapping.plugins]
+    }
+  })
+};
+
 const configReducer = (state, action) => {
   switch (action.type) {
     case SET_DEFAULT_CONFIG:
@@ -95,11 +115,14 @@ const configReducer = (state, action) => {
         defaultConfig: action.config
       };
 
-    case SET_CONFIG:      
+    case SET_CONFIG: {
+      copyConfigPlugins(action.config, state.defaultConfig);
+
       return {
         ...state,
         config: action.config
       };
+    }
 
     case SET_PLUGINS:
       return {
@@ -151,7 +174,7 @@ export const ConfigProvider = ({ children }) => {
           throw new Error("Default config data is invalid: " + res);
         }
 
-        // XXX: Temporary fix: get plugins from default config (commented out below)
+        // XXX: Temporary fix: get plugins from default config
         const plugins = res.reduce((all, current) => {
           current.plugins.forEach(plugin => {
             if (!all.find(({ piid }) => piid === plugin.piid)) {
@@ -166,22 +189,19 @@ export const ConfigProvider = ({ children }) => {
           type: SET_PLUGINS,
           plugins: plugins
         });
-
-        console.log(plugins)
       }
       catch (error) {
         console.log(error);
       } 
-
-/*      
+      
       try {
         const res = await getConfig();
 
         if (configValidator(res)) {
           dispatch({
             type: SET_CONFIG,
-            plugins: res
-          });
+            config: res
+          });          
         } 
         else {
           throw new Error("Config data is invalid: " + res);
@@ -190,7 +210,7 @@ export const ConfigProvider = ({ children }) => {
       catch (error) {
         console.error(error);
       }
-*/
+
       try {
         const res = await getSelectors();
 

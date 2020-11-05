@@ -1,21 +1,26 @@
 import React from "react";
 import { 
-  Box,
   MenuItem,  
   FormControl, 
   Select } from "@material-ui/core";
 
-const SelectorTablePlugins = ({ plugins }) => {
-  //const classes = useStyles();
-
+const SelectorTablePlugins = ({ selectors, plugin, plugins }) => {
   const handleChange = (event) => {
     console.log(event.target.value);
   };   
 
   return (
-    <>
-      Hello
-    </>
+    <FormControl>                   
+      <Select
+        value={ plugin.piid }
+        onChange={ handleChange }
+      >
+        <MenuItem value=""><em>None</em></MenuItem>
+        { plugins.map((plugin, i) => (
+          <MenuItem key={ i } value={ plugin.piid }>{ plugin.title }</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   )
 };
 

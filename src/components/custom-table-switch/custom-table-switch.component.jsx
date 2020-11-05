@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { ConfigContext } from '../../context/config-context';
+import React, { useContext } from "react";
+import { ConfigContext } from "../../context/config-context";
 
 import { Switch } from "@material-ui/core";
 
@@ -16,7 +16,7 @@ const CustomTableSwitch = ({ enabled, piid, pluginType }) => {
       onChange={ handleEnableToggle }
       color="primary"
       name="checkedA"
-      inputProps={{ 'aria-label': 'checkbox' }}
+      inputProps={{ "aria-label": "checkbox" }}
     />
   )
 };
