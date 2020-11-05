@@ -9,8 +9,8 @@ import CustomTableSwitch from '../../components/custom-table-switch/custom-table
 import './admin-dashboard.styles.scss';
 
 const AdminDashboard = () => {
-  const context = useContext(ConfigContext);
-  const { config, plugins, examplePlugins } = context.state;
+  const [context] = useContext(ConfigContext);
+  const { config, plugins, examplePlugins } = context;
   const [ useExampleData, setUseExampleData ] = useState(false);
 
   const toggleDataSource = () => {

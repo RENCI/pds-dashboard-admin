@@ -1,10 +1,10 @@
-import React from "react";
-import { 
-  MenuItem,  
-  FormControl, 
-  Select } from "@material-ui/core";
+import React, { useContext } from "react";
+import { MenuItem, FormControl, Select } from "@material-ui/core";
+import { ConfigContext } from '../../context/config-context';
 
 const SelectorTablePlugins = ({ selectors, plugin, plugins }) => {
+  const {config, configDispatch} = useContext(ConfigContext);
+
   const handleChange = (event) => {
     console.log(event.target.value);
   };   

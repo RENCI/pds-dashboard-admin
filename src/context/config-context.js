@@ -231,7 +231,7 @@ export const ConfigProvider = ({ children }) => {
   }, []);
 
   return (
-    <ConfigContext.Provider value={{ state, dispatch }}>
+    <ConfigContext.Provider value={ [state, dispatch] }>
       {children}
     </ConfigContext.Provider>
   );
