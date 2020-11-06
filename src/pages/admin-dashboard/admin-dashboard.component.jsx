@@ -17,16 +17,20 @@ const AdminDashboard = () => {
     setUseExampleData(!useExampleData)
   }
 
+  const showButton = false;
+
   return (
     <div className="container">
       <div className="grid-item">
         <h1 className="title">PDS Admin Dashboard</h1>
-        <div
-          className={useExampleData ? "data-source-selection example-data" : "data-source-selection config-data"} 
-          onClick={toggleDataSource}
-        >
-          {useExampleData ? "Load Config Data" : "Load Example Data"}
-        </div>
+        { showButton ?
+          <div
+            className={useExampleData ? "data-source-selection example-data" : "data-source-selection config-data"} 
+            onClick={toggleDataSource}
+          >
+            {useExampleData ? "Load Config Data" : "Load Example Data"}
+          </div>
+        : null }
       </div>
       <SelectorTable
         title={"Selectors"}
