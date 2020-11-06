@@ -1,21 +1,22 @@
 import React, { useContext } from "react";
 import { MenuItem, FormControl, Select } from "@material-ui/core";
-import { ConfigContext } from '../../context/config-context';
+import { ConfigContext } from "../../context/config-context";
+import { SET_PLUGIN } from "../../context/actionTypes";
 
 const SelectorTablePlugins = ({ selectors, plugin, plugins }) => {
-  const {config, configDispatch} = useContext(ConfigContext);
+  const [, configDispatch] = useContext(ConfigContext);
 
   const handleChange = (event) => {
-    console.log(event.target.value);
+    configDispatch({ type: SET_PLUGIN, selectors: selectors, piid: event.target.value });
   };   
 
   return (
     <FormControl>                   
       <Select
-        value={ plugin.piid }
+        value={ plugin ? plugin.piid : "none" }
         onChange={ handleChange }
       >
-        <MenuItem value=""><em>None</em></MenuItem>
+        <MenuItem value="none"><em>None</em></MenuItem>
         { plugins.map((plugin, i) => (
           <MenuItem key={ i } value={ plugin.piid }>{ plugin.title }</MenuItem>
         ))}

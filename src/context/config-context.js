@@ -9,7 +9,8 @@ import {
   SET_CONFIG, 
   SET_SELECTORS, 
   SET_PLUGINS, 
-  TOGGLE_ENABLED 
+  TOGGLE_ENABLED,
+  SET_PLUGIN
 } from './actionTypes';
 
 const initialState = {
@@ -91,20 +92,30 @@ const selectorCompare = (selector1, selector2) => {
   return selector1.id === selector2.id && selector1.selectorValue.value === selector2.selectorValue.value;
 };
 
-const mappingCompare = (mapping1, mapping2) => {
-  return mapping1.selectors.reduce((accum, selector1) => {
-    return accum && mapping2.selectors.some(selector2 => selectorCompare(selector1, selector2))
+const selectorsCompare = (group1, group2) => {
+  return group1.reduce((accum, selector1) => {
+    return accum && group2.some(selector2 => selectorCompare(selector1, selector2));
   }, true);
 }
 
 const copyConfigPlugins = (config, defaultConfig) => {
   config.forEach(mapping => {
-    const defaultMapping = defaultConfig.find(defaultMapping => mappingCompare(mapping, defaultMapping));
+    const defaultMapping = defaultConfig.find(defaultMapping => {
+      return selectorsCompare(mapping.selectors, defaultMapping.selectors);
+    });
 
     if (defaultMapping) {
       mapping.plugins = [...defaultMapping.plugins]
     }
   })
+};
+
+const setPlugin = (config, selectors, piid) => {
+  const mapping = config.find(mapping => selectorsCompare(mapping.selectors, selectors));
+
+  if (mapping) {
+    mapping.plugin = mapping.plugins.find(plugin => plugin.piid === piid);
+  }
 };
 
 const configReducer = (state, action) => {
@@ -139,11 +150,18 @@ const configReducer = (state, action) => {
       };
 
     case TOGGLE_ENABLED:
-      toggleEnabled(action.payload)
+      toggleEnabled(action.payload);
 
       // XXX: Should response in toggleEnabled contain updated plugin?
       const plugin = state.plugins.find(plugin => plugin.piid === action.payload.piid);
       plugin.enabled = action.payload.enabled;
+
+      return {
+        ...state
+      };
+
+    case SET_PLUGIN:
+      setPlugin(state.config, action.selectors, action.piid);
 
       return {
         ...state
