@@ -33,7 +33,7 @@ const AdminDashboard = () => {
         : null }
       </div>
       <SelectorTable
-        title={"Selectors"}
+        title={"Selectors → Plugins"}
         tableHeaders={[
           { title: "Selectors", render: rowData => <SelectorTableSelectors { ...rowData } /> },
           { title: "Plugin", render: rowData => <SelectorTablePlugins {...rowData } /> }
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
         config={ config }
       />
       <CustomTable
-        title={"Mapping Plugins"}
+        title={"Mapper Plugins"}
         tableHeaders={[
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" },
