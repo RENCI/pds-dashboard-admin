@@ -15,7 +15,7 @@ const SelectorTableSelectors = ({ selectors }) => {
 
   const selectorDisplay = selector => (
     <>
-      <Box component="span" fontStyle="italic">{ selector.id }</Box>
+      <Box component="span">{ selector.id }</Box>
       —<Box component="span">{ selector.title }</Box>
       : <Box component="span" fontWeight="fontWeightMedium">{ selector.selectorValue.title }</Box>
     </>
@@ -23,7 +23,7 @@ const SelectorTableSelectors = ({ selectors }) => {
 
   const pluginTypeDisplay = selector => (
     <>
-      <Box component="span" fontStyle="italic">{ selector.id }</Box>
+      <Box component="span">{ selector.id }</Box>
       : <Box component="span" fontWeight="fontWeightMedium">{ typeMap[selector.selectorValue.value] }</Box>
     </>
   );

@@ -8,7 +8,7 @@ const PluginDetails = ({ selectors }) => {
     <Box ml={2}>
       { selectors.length > 0 ? <h4>Plugin Selectors</h4> : <h4>No Plugin Selectors</h4> }
       <ul>
-        { selectors.map(selector => (
+        { selectors.filter(({ id }) => id !== 'pluginType').map(selector => (
             <li key={selector.selectorValue.title}>
               <Box component='span' fontWeight='fontWeightBold' mr={2}>{ selector.title }</Box>
               <Box component='span' mr={2}>{ selector.selectorValue.value }</Box>
