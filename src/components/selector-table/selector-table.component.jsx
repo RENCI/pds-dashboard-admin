@@ -1,4 +1,4 @@
-import React, { useState, useReducer, Fragment } from "react";
+import React, { useState } from "react";
 import { Button,  } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import MaterialTable from "material-table";
@@ -6,7 +6,7 @@ import AddSelectorsDialog from "../add-selectors-dialog/add-selectors-dialog.com
 
 import "./selector-table.styles.scss";
 
-const SelectorTable = ({ config, selectors, title, tableHeaders }) => {
+const SelectorTable = ({ config, selectors, plugins, title, tableHeaders }) => {
   const [addOpen, setAddOpen] = useState(false);
 
   const onAddClick = () => {
@@ -37,6 +37,7 @@ const SelectorTable = ({ config, selectors, title, tableHeaders }) => {
       </Button> 
       <AddSelectorsDialog 
         allSelectors={ selectors } 
+        plugins={ plugins }
         open={ addOpen } 
         onConfirm={ onAddConfirm }
         onClose={ onAddClose } 

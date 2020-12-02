@@ -19,6 +19,8 @@ const AdminDashboard = () => {
 
   const showButton = false;
 
+  const guidancePlugins = useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "g") : plugins.filter(plugins => plugins.pluginType === "g");
+
   return (
     <div className="container">
       <div className="grid-item">
@@ -28,7 +30,7 @@ const AdminDashboard = () => {
             className={useExampleData ? "data-source-selection example-data" : "data-source-selection config-data"} 
             onClick={toggleDataSource}
           >
-            {useExampleData ? "Load Config Data" : "Load Example Data"}
+            { useExampleData ? "Load Config Data" : "Load Example Data" }
           </div>
         : null }
       </div>
@@ -40,6 +42,7 @@ const AdminDashboard = () => {
         ]}
         config={ config }
         selectors={ selectors }
+        plugins={ guidancePlugins }
       />
       <CustomTable
         title={"Mapper Plugins"}
@@ -49,8 +52,8 @@ const AdminDashboard = () => {
           { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
         plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "m") : plugins.filter(plugins => plugins.pluginType === "m")}
-        defaultPlugin={plugins.filter(plugins => plugins.pluginType === "md")}
-        showSelectors={false}
+        defaultPlugin={ plugins.filter(plugins => plugins.pluginType === "md") }
+        showSelectors={ false }
       />
       <CustomTable
         title={"Guidance Plugins"}
@@ -59,8 +62,8 @@ const AdminDashboard = () => {
           { title: "Title", field: "title" },
           { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
-        plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "g") : plugins.filter(plugins => plugins.pluginType === "g")}
-        showSelectors={true}
+        plugins={ guidancePlugins }
+        showSelectors={ true }
       />
       <CustomTable
         title={"Convenience Plugins"}
@@ -69,8 +72,8 @@ const AdminDashboard = () => {
           { title: "Title", field: "title" },
           { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
-        plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "c") : plugins.filter(plugins => plugins.pluginType === "c")}
-        showSelectors={false}
+        plugins={ useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "c") : plugins.filter(plugins => plugins.pluginType === "c") }
+        showSelectors={ false }
       />
       <CustomTable
         title={"FHIR Plugins"}
@@ -79,9 +82,9 @@ const AdminDashboard = () => {
           { title: "Title", field: "title" },
           { title: "Enabled", render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
-        plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "f") : plugins.filter(plugins => plugins.pluginType === "f")}
-        defaultPlugin={plugins.filter(plugins => plugins.pluginType === "fd")}
-        showSelectors={false}
+        plugins={ useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "f") : plugins.filter(plugins => plugins.pluginType === "f") }
+        defaultPlugin={ plugins.filter(plugins => plugins.pluginType === "fd") }
+        showSelectors={ false }
       />
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { useReducer, Fragment } from "react";
+import React, { useState, useReducer, Fragment } from "react";
 import { 
   Dialog, DialogTitle, DialogContent, DialogActions, 
-  Button, Box, TextField, IconButton 
+  Button, Box, TextField, IconButton, Divider 
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { Add, RemoveCircleOutline } from "@material-ui/icons";
@@ -9,7 +9,7 @@ import { Add, RemoveCircleOutline } from "@material-ui/icons";
 const ADD_SELECTOR = "ADD_SELECTOR";
 const REMOVE_SELECTOR = "REMOVE_SELECTOR";
 
-const AddSelectorsDialog = ({ allSelectors, open, onConfirm, onClose }) => {  
+const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose }) => {  
   const [selectors, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case ADD_SELECTOR:
@@ -28,8 +28,12 @@ const AddSelectorsDialog = ({ allSelectors, open, onConfirm, onClose }) => {
     }
   }, []);
 
-  const options = allSelectors.reduce((options, selector) => {
-    return options.concat(selector.legalValues.enum.map(value => {
+  const [plugin, setPlugin] = useState(null);
+
+  const selectorOptions = allSelectors.reduce((options, selector) => {
+    return options.concat(selector.legalValues.enum.filter(value => {
+      return !selectors.find(({ id, selectorValue }) => id === selector.id && selectorValue.value === value.value);
+    }).map(value => {
       return {
         id: selector.id,
         title: selector.title,
@@ -37,6 +41,14 @@ const AddSelectorsDialog = ({ allSelectors, open, onConfirm, onClose }) => {
       };
     }));
   },[]);
+
+  const pluginOptions = plugins.filter(plugin => {
+    return plugin.settingsDefaults.pluginSelectors.reduce((present, selector) => {
+      return present || selectors.find(({ id, selectorValue }) => {
+        return id === selector.id && selectorValue.value === selector.selectorValue.value;
+      });
+    }, false);
+  });
 
   const valueLabel = ({ value, title }) => value + (title ? ("—" + title) : "");
 
@@ -51,12 +63,16 @@ const AddSelectorsDialog = ({ allSelectors, open, onConfirm, onClose }) => {
     </>
   );
 
-  const onChange = (evt, value, reason) => {
+  const onSelectorChange = (evt, value) => {
     dispatch({ type: ADD_SELECTOR, selector: value });
   };
 
-  const onRemoveClick = index => {
+  const onRemoveSelectorClick = index => {
     dispatch({ type: REMOVE_SELECTOR, index: index });
+  };
+
+  const onPluginChange = (evt, value) => {
+    setPlugin(value);
   };
 
   return (
@@ -71,7 +87,7 @@ const AddSelectorsDialog = ({ allSelectors, open, onConfirm, onClose }) => {
             <Fragment key={ i }>
               <Box display="flex" alignItems="center">
                 <Box flexGrow={ 1 }>{ selectorValueDisplay(selector) }</Box>
-                <IconButton onClick={ () => onRemoveClick(i) }>
+                <IconButton onClick={ () => onRemoveSelectorClick(i) }>
                   <RemoveCircleOutline />
                 </IconButton> 
               </Box>
@@ -88,20 +104,30 @@ const AddSelectorsDialog = ({ allSelectors, open, onConfirm, onClose }) => {
           ))}
         </Box>
         <Autocomplete 
-          options={ options }
+          options={ selectorOptions }
           groupBy={ selector => selectorLabel(selector) }
           getOptionLabel={ ({ selectorValue }) => valueLabel(selectorValue) } 
           value={ null }
           inputValue={ "" }
           blurOnSelect= { true }
-          onChange={ onChange }
+          onChange={ onSelectorChange }
           renderInput={ params => <TextField {...params} label="Add selector" variant="outlined" /> }/>
+        <Box my={ 2 }><Divider variant="middle" /></Box>
+        <Autocomplete 
+          options={ pluginOptions }
+          getOptionLabel={ ({ title }) => title } 
+          value={ plugin }
+          onChange={ onPluginChange }
+          renderInput={ params => <TextField {...params} label="Set plugin" variant="outlined" /> }/>
       </DialogContent>
       <DialogActions>
         <Button 
           color="primary" 
-          disabled={ selectors.length === 0 }
-          onClick={ () => onConfirm(selectors) }
+          disabled={ !plugin || selectors.length === 0 }
+          onClick={ () => onConfirm({ 
+            selectors: selectors, 
+            plugin: { piid: plugin.piid }
+          }) }
         >
           Confirm
         </Button>
