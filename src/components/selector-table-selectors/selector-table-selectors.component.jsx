@@ -15,9 +15,10 @@ const SelectorTableSelectors = ({ selectors }) => {
 
   const selectorDisplay = selector => (
     <>
-      <Box component="span">{ selector.id }</Box>
-      —<Box component="span">{ selector.title }</Box>
-      : <Box component="span" fontWeight="fontWeightMedium">{ selector.selectorValue.title }</Box>
+      <Box component="span">{ selector.id }—{ selector.title }</Box>
+      : <Box component="span" fontWeight="fontWeightMedium">
+        { selector.selectorValue.value }{ selector.selectorValue.title ? ("—" + selector.selectorValue.title) : null }
+      </Box>
     </>
   );
 
