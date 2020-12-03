@@ -5,7 +5,7 @@ import PluginDetails from '../plugin-details/plugin-details.component';
 
 import './custom-table.styles.scss';
 
-const CustomTable = ({ plugins, title, tableHeaders, showSelectors }) => {
+const CustomTable = ({ plugins, title, tableHeaders }) => {
   const [filterSelectorList, setFilterSelectedList] = useState(['ICD-10CM:I48.91']);
 
   return (
@@ -18,7 +18,6 @@ const CustomTable = ({ plugins, title, tableHeaders, showSelectors }) => {
           Toolbar: props => (
             <div>
               <MTableToolbar {...props} />
-              {showSelectors ? <SelectorList filterSelectorList={filterSelectorList} setFilterSelectedList={setFilterSelectedList} /> : null }
             </div>
           ),
         }}
