@@ -42,13 +42,15 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
     }));
   },[]);
 
-  const pluginOptions = plugins.filter(plugin => {
-    return plugin.settingsDefaults.pluginSelectors.reduce((present, selector) => {
-      return present || selectors.find(({ id, selectorValue }) => {
-        return id === selector.id && selectorValue.value === selector.selectorValue.value;
-      });
-    }, false);
-  });
+  const validPlugins = () => {
+    return plugins.filter(plugin => {
+      return plugin.enabled && plugin.settingsDefaults.pluginSelectors.reduce((present, selector) => {
+        return present || selectors.find(({ id, selectorValue }) => {
+          return id === selector.id && selectorValue.value === selector.selectorValue.value;
+        });
+      }, false);
+    });
+  };
 
   const valueLabel = ({ value, title }) => value + (title ? ("—" + title) : "");
 
@@ -69,6 +71,10 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
 
   const onRemoveSelectorClick = index => {
     dispatch({ type: REMOVE_SELECTOR, index: index });
+
+    if (plugin && validPlugins().find(({ piid }) => piid === plugin.piid)) {
+      setPlugin(null);
+    }
   };
 
   const onPluginChange = (evt, value) => {
@@ -80,7 +86,7 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
       open={ open } 
       onClose={ onClose }
     >
-      <DialogTitle>Add Selector(s)</DialogTitle>
+      <DialogTitle>Selectors → Plugin</DialogTitle>
       <DialogContent>
         <Box mb={ 4 } minWidth="20em">
           { selectors.map((selector, i, a) => (        
@@ -114,7 +120,7 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
           renderInput={ params => <TextField {...params} label="Add selector" variant="outlined" /> }/>
         <Box my={ 2 }><Divider variant="middle" /></Box>
         <Autocomplete 
-          options={ pluginOptions }
+          options={ validPlugins() }
           getOptionLabel={ ({ title }) => title } 
           value={ plugin }
           onChange={ onPluginChange }
