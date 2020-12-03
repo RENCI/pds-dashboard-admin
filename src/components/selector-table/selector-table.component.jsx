@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { Button,  } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
 import MaterialTable from "material-table";
@@ -7,18 +8,26 @@ import AddSelectorsDialog from "../add-selectors-dialog/add-selectors-dialog.com
 import "./selector-table.styles.scss";
 
 const SelectorTable = ({ config, selectors, plugins, title, tableHeaders }) => {
-  const [addOpen, setAddOpen] = useState(false);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
 
-  const onAddClick = () => {
-    setAddOpen(true);
+  const onAddDialogClick = () => {
+    setAddDialogOpen(true);
   }
 
-  const onAddConfirm = selectors => {
-    console.log(selectors);
+  const onAddDialogConfirm = async selectorConfig => {
+    try {
+      // XXX: Comment out until selectorConfig API is implemented
+      //const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, [selectorConfig]);
+
+      setAddDialogOpen(false);
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
-  const onAddClose = () => {
-    setAddOpen(false);
+  const onAddDialogClose = () => {
+    setAddDialogOpen(false);
   }
 
   return (
@@ -32,15 +41,15 @@ const SelectorTable = ({ config, selectors, plugins, title, tableHeaders }) => {
         variant="contained" 
         color="primary"
         startIcon={ <Add /> }
-        onClick={ onAddClick }>
-          Add Selector(s)
+        onClick={ onAddDialogClick }>
+          Add Selector Rule
       </Button> 
       <AddSelectorsDialog 
         allSelectors={ selectors } 
         plugins={ plugins }
-        open={ addOpen } 
-        onConfirm={ onAddConfirm }
-        onClose={ onAddClose } 
+        open={ addDialogOpen } 
+        onConfirm={ onAddDialogConfirm }
+        onClose={ onAddDialogClose } 
       />
     </div>
   );

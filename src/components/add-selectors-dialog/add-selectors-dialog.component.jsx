@@ -86,7 +86,7 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
       open={ open } 
       onClose={ onClose }
     >
-      <DialogTitle>Selectors → Plugin</DialogTitle>
+      <DialogTitle>Selector Rule</DialogTitle>
       <DialogContent>
         <Box mb={ 4 } minWidth="20em">
           { selectors.map((selector, i, a) => (        
