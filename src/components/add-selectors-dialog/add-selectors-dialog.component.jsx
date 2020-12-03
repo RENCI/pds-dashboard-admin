@@ -1,4 +1,4 @@
-import React, { useState, useReducer, Fragment } from "react";
+import React, { useState, useReducer, useEffect, Fragment } from "react";
 import { 
   Dialog, DialogTitle, DialogContent, DialogActions, 
   Button, Box, TextField, IconButton, Divider 
@@ -8,6 +8,7 @@ import { Add, RemoveCircleOutline } from "@material-ui/icons";
 
 const ADD_SELECTOR = "ADD_SELECTOR";
 const REMOVE_SELECTOR = "REMOVE_SELECTOR";
+const CLEAR = "CLEAR";
 
 const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose }) => {  
   const [selectors, dispatch] = useReducer((state, action) => {
@@ -23,12 +24,22 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
         return newState;      
       }
 
+      case CLEAR:
+        return [];
+
       default:
         console.log("Invalid action type");
     }
   }, []);
 
   const [plugin, setPlugin] = useState(null);
+
+  useEffect(() => {
+    if (!open) {
+      dispatch({ type: CLEAR });
+      setPlugin(null);
+    }      
+  }, [open]);
 
   const selectorOptions = allSelectors.reduce((options, selector) => {
     return options.concat(selector.legalValues.enum.filter(value => {
