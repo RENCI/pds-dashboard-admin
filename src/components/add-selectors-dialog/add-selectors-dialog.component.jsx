@@ -135,7 +135,7 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
           getOptionLabel={ ({ title }) => title } 
           value={ plugin }
           onChange={ onPluginChange }
-          renderInput={ params => <TextField {...params} label="Set plugin" variant="outlined" /> }/>
+          renderInput={ params => <TextField {...params} label="Set default plugin" variant="outlined" /> }/>
       </DialogContent>
       <DialogActions>
         <Button 

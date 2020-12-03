@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 
 const typeMap = {
   g: "Guidance",
@@ -37,7 +38,8 @@ const SelectorTableSelectors = ({ selectors }) => {
           ).map((selector, i, a) => (
             <div key={ i }>
               { selector.id === "pluginType" ? pluginTypeDisplay(selector) : selectorDisplay(selector) }
-              { i !== a.length - 1 ? <Box ml={ 1 }>AND</Box> : null }
+              { i !== a.length - 1 ? <Box ml={ 2 }><Add /></Box> 
+              : null }
             </div>
           ))}
     </>
