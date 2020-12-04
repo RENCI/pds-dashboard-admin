@@ -5,6 +5,7 @@ import {
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { Add, RemoveCircleOutline } from "@material-ui/icons";
+import SelectorDisplay from "../selector-display/selector-display.component";
 
 const ADD_SELECTOR = "ADD_SELECTOR";
 const REMOVE_SELECTOR = "REMOVE_SELECTOR";
@@ -67,15 +68,6 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
 
   const selectorLabel = ({ id, title }) => id + "—" + title;
 
-  const selectorValueDisplay = selector => (
-    <>
-      <Box component="span">{ selectorLabel(selector) }</Box>
-      : <Box component="span" fontWeight="fontWeightMedium">
-        { valueLabel(selector.selectorValue) }
-      </Box>
-    </>
-  );
-
   const onSelectorChange = (evt, value) => {
     dispatch({ type: ADD_SELECTOR, selector: value });
   };
@@ -103,7 +95,7 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
           { selectors.map((selector, i, a) => (        
             <Fragment key={ i }>
               <Box display="flex" alignItems="center">
-                <Box flexGrow={ 1 }>{ selectorValueDisplay(selector) }</Box>
+                <Box flexGrow={ 1 }><SelectorDisplay selector={ selector } /></Box>
                 <IconButton onClick={ () => onRemoveSelectorClick(i) }>
                   <RemoveCircleOutline />
                 </IconButton> 

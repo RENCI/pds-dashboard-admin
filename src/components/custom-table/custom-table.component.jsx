@@ -24,12 +24,8 @@ const CustomTable = ({ plugins, title, tableHeaders }) => {
         detailPanel={[
           {
             tooltip: 'Show Details',
-            render: rowData => {
-              return (
-                <PluginDetails selectors={!rowData.settingsDefaults ? [] : rowData.settingsDefaults.pluginSelectors} />
-              )
-            },
-          },
+            render: rowData => <PluginDetails settings={ rowData.settingsDefaults } />
+          }
         ]}
       />
     </div>

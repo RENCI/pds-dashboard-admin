@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@material-ui/core";
 import { Add } from "@material-ui/icons";
+import SelectorDisplay from "../selector-display/selector-display.component";
 
 const typeMap = {
   g: "Guidance",
@@ -13,15 +14,6 @@ const typeMap = {
 
 const SelectorTableSelectors = ({ selectors }) => {
   const filterPluginType = true;
-
-  const selectorDisplay = selector => (
-    <>
-      <Box component="span">{ selector.id }—{ selector.title }</Box>
-      : <Box component="span" fontWeight="fontWeightMedium">
-        { selector.selectorValue.value }{ selector.selectorValue.title ? ("—" + selector.selectorValue.title) : null }
-      </Box>
-    </>
-  );
 
   const pluginTypeDisplay = selector => (
     <>
@@ -37,9 +29,12 @@ const SelectorTableSelectors = ({ selectors }) => {
             !(selector.id === "pluginType" && selector.selectorValue.value === "g") : true
           ).map((selector, i, a) => (
             <div key={ i }>
-              { selector.id === "pluginType" ? pluginTypeDisplay(selector) : selectorDisplay(selector) }
-              { i !== a.length - 1 ? <Box ml={ 2 }><Add /></Box> 
-              : null }
+              { selector.id === "pluginType" ? 
+                pluginTypeDisplay(selector) : 
+                <SelectorDisplay selector={ selector } /> }
+              { i !== a.length - 1 ? 
+                <Box ml={ 2 }><Add /></Box> :
+                null }
             </div>
           ))}
     </>
