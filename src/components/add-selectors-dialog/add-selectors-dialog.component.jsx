@@ -29,7 +29,7 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
         return [];
 
       default:
-        console.log("Invalid action type");
+        console.log("Invalid action type: " + action.type);
     }
   }, []);
 

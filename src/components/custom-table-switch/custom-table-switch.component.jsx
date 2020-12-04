@@ -13,10 +13,7 @@ const CustomTableSwitch = ({ enabled, piid, pluginType }) => {
     <Switch
       checked={ enabled }
       onChange={ handleEnableToggle }
-      color="primary"
-      name="checkedA"
-      inputProps={{ "aria-label": "checkbox" }}
-    />
+      color="primary" />
   )
 };
 
