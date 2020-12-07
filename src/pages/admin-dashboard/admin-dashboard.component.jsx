@@ -22,8 +22,25 @@ const AdminDashboard = () => {
       <SelectorTable
         title={"Selectors → Plugins"}
         tableHeaders={[
-          { title: "Selector(s)", render: rowData => <SelectorTableSelectors { ...rowData } /> },
-          { title: "Default Plugin", render: rowData => <SelectorTablePlugins {...rowData } /> }
+          { 
+            title: "Selector(s)", 
+            render: rowData => <SelectorTableSelectors { ...rowData } />,
+            customFilterAndSearch: (term, rowData) => {
+              console.log(rowData)
+              return rowData.plugins.map(plugin => {
+                return plugin.title;
+              }).join(" ").toLowerCase().includes(term.toLowerCase());
+            }
+          },
+          { 
+            title: "Default Plugin", 
+            render: rowData => <SelectorTablePlugins {...rowData } />,
+            customFilterAndSearch: (term, rowData) => {
+              return rowData.selectors.map(selector => {
+                return selector.id + " " + selector.title + " " + selector.selectorValue.value + " " + selector.selectorValue.value;
+              }).join(" ").toLowerCase().includes(term.toLowerCase());              
+            }
+          }
         ]}
         selectorConfig={ selectorConfig }
         selectors={ selectors }

@@ -61,7 +61,7 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
         columns={ [...tableHeaders,
           { width: 0, render: rowData => <IconButton onClick={ () => onRemoveClick(rowData) } ><DeleteOutline /></IconButton> } ] 
         }
-        data={ selectorConfig }
+        data={ selectorConfig }        
       />
       <ConfirmRemoveDialog 
         open={ removeDialogOpen } 
