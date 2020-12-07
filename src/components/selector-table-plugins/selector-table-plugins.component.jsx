@@ -13,10 +13,9 @@ const SelectorTablePlugins = ({ selectors, plugin, plugins }) => {
   return (
     <FormControl>                   
       <Select
-        value={ plugin ? plugin.piid : "none" }
+        value={ plugin ? plugin.piid : "" }
         onChange={ handleChange }
       >
-        <MenuItem value="none"><em>None</em></MenuItem>
         { plugins.map((plugin, i) => (
           <MenuItem key={ i } value={ plugin.piid }>{ plugin.title }</MenuItem>
         ))}

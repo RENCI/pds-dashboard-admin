@@ -10,29 +10,14 @@ import "./admin-dashboard.styles.scss";
 
 const AdminDashboard = () => {
   const [context] = useContext(ConfigContext);
-  const { config, selectors, plugins, examplePlugins } = context;
-  const [useExampleData, setUseExampleData] = useState(false);
+  const { config, selectors, selectorConfig } = context;
 
-  const toggleDataSource = () => {
-    setUseExampleData(!useExampleData)
-  };
-
-  const showButton = false;
-
-  const guidancePlugins = useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "g") : plugins.filter(plugins => plugins.pluginType === "g");
+  const guidancePlugins = config.filter(plugin => plugin.pluginType === "g");
 
   return (
     <div className="container">
       <div className="grid-item">
         <h1 className="title">PDS Admin Dashboard</h1>
-        { showButton ?
-          <div
-            className={useExampleData ? "data-source-selection example-data" : "data-source-selection config-data"} 
-            onClick={toggleDataSource}
-          >
-            { useExampleData ? "Load Config Data" : "Load Example Data" }
-          </div>
-        : null }
       </div>
       <SelectorTable
         title={"Selectors → Plugins"}
@@ -40,20 +25,10 @@ const AdminDashboard = () => {
           { title: "Selector(s)", render: rowData => <SelectorTableSelectors { ...rowData } /> },
           { title: "Default Plugin", render: rowData => <SelectorTablePlugins {...rowData } /> }
         ]}
-        config={ config }
+        selectorConfig={ selectorConfig }
         selectors={ selectors }
         plugins={ guidancePlugins }
-      />
-      <CustomTable
-        title={"Mapper Plugins"}
-        tableHeaders={[
-          { title: "ID", field: "piid" },
-          { title: "Title", field: "title" },
-          { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
-        ]}
-        plugins={useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "m") : plugins.filter(plugins => plugins.pluginType === "m")}
-        defaultPlugin={ plugins.filter(plugins => plugins.pluginType === "md") }
-      />
+      />      
       <CustomTable
         title={"Guidance Plugins"}
         tableHeaders={[
@@ -64,13 +39,14 @@ const AdminDashboard = () => {
         plugins={ guidancePlugins }
       />
       <CustomTable
-        title={"Convenience Plugins"}
+        title={"Mapper Plugins"}
         tableHeaders={[
           { title: "ID", field: "piid" },
           { title: "Title", field: "title" },
           { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
-        plugins={ useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "c") : plugins.filter(plugins => plugins.pluginType === "c") }
+        plugins={ config.filter(plugin => plugin.pluginType === "m") }
+        defaultPlugin={ config.filter(plugin => plugin.pluginType === "md") }
       />
       <CustomTable
         title={"FHIR Plugins"}
@@ -79,8 +55,17 @@ const AdminDashboard = () => {
           { title: "Title", field: "title" },
           { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
         ]}
-        plugins={ useExampleData ? examplePlugins.filter(examplePlugins => examplePlugins.pluginType === "f") : plugins.filter(plugins => plugins.pluginType === "f") }
-        defaultPlugin={ plugins.filter(plugins => plugins.pluginType === "fd") }
+        plugins={ config.filter(plugin => plugin.pluginType === "f") }
+        defaultPlugin={ config.filter(plugin => plugin.pluginType === "fd") }
+      />
+      <CustomTable
+        title={"Convenience Plugins"}
+        tableHeaders={[
+          { title: "ID", field: "piid" },
+          { title: "Title", field: "title" },
+          { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
+        ]}
+        plugins={ config.filter(plugin => plugin.pluginType === "c") }
       />
     </div>
   );

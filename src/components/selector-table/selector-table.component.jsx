@@ -9,7 +9,7 @@ import ConfirmRemoveDialog from "../confirm-remove-dialog/confirm-remove-dialog.
 
 import "./selector-table.styles.scss";
 
-const SelectorTable = ({ config, selectors, plugins, title, tableHeaders }) => {
+const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders }) => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
   const [removeRowData, setRemoveRowData] = useState(null);
@@ -61,7 +61,7 @@ const SelectorTable = ({ config, selectors, plugins, title, tableHeaders }) => {
         columns={ [...tableHeaders,
           { width: 0, render: rowData => <IconButton onClick={ () => onRemoveClick(rowData) } ><DeleteOutline /></IconButton> } ] 
         }
-        data={ config }
+        data={ selectorConfig }
       />
       <ConfirmRemoveDialog 
         open={ removeDialogOpen } 
