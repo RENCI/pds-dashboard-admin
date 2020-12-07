@@ -18,10 +18,19 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
     setAddDialogOpen(true);
   }
 
-  const onAddDialogConfirm = async selectorConfig => {
+  const onAddDialogConfirm = async rule => {
     try {
-      // XXX: Comment out until selectorConfig API is implemented
-      //const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, [selectorConfig]);
+      const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, [{
+        piid: rule.plugin.piid,
+        selectors: rule.selectors.map(({ id, selectorValue }) => ({ 
+          id: id,
+          selectorValue: {
+            value: selectorValue.value
+          }
+        }))
+      }]);
+
+      console.log(res);
 
       setAddDialogOpen(false);
     }
@@ -44,14 +53,21 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
     setRemoveRowData(null);
   };
 
-  const onRemoveDialogConfirm = () => {
+  const onRemoveDialogConfirm = async () => {
     setRemoveDialogOpen(false);
-
-    // XXX: Make call to API when implemented
-    //const res = await axios.delete(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, [selectorConfig]);
-    console.log(removeRowData);
-
     setRemoveRowData(null);
+
+    try {
+      const res = await axios.delete(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, [{
+        piid: removeRowData.plugin.piid,
+        selectors: removeRowData.selectors.map(({ id }) => ({ id: id }))
+      }]);
+
+      console.log(res);
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   return (

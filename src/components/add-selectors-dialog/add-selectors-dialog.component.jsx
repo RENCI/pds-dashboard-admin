@@ -135,7 +135,7 @@ const AddSelectorsDialog = ({ allSelectors, plugins, open, onConfirm, onClose })
           disabled={ !plugin || selectors.length === 0 }
           onClick={ () => onConfirm({ 
             selectors: selectors, 
-            plugin: { piid: plugin.piid }
+            plugin: plugin
           }) }
         >
           Confirm
