@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MaterialTable, { MTableToolbar } from 'material-table';
 import PluginDetails from '../plugin-details/plugin-details.component';
 
@@ -21,7 +21,7 @@ const CustomTable = ({ plugins, title, tableHeaders }) => {
         detailPanel={[
           {
             tooltip: 'Show Details',
-            render: rowData => <PluginDetails piid={ rowData.piid } settings={ rowData.settingsDefaults } />
+            render: rowData => <PluginDetails plugin={ rowData } />
           }
         ]}
       />

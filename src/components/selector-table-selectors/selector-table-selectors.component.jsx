@@ -33,7 +33,7 @@ const SelectorTableSelectors = ({ selectors }) => {
               pluginTypeDisplay(selector) : 
               <SelectorDisplay selector={ selector } /> }
             { i !== a.length - 1 ? 
-              <Box ml={ 1 } display="flex" alignContent="center"><Add /></Box> 
+              <Box my={ 1 } ml={ 1 } display="flex" alignContent="center"><Add /></Box> 
             : null }
           </Fragment>
         ))}

@@ -4,6 +4,7 @@ import { configValidator } from '../validation/config.validation';
 import axios from 'axios';
 
 import {  
+  SET_CONFIG_DEFAULT,
   SET_CONFIG, 
   SET_SELECTORS, 
   SET_SELECTOR_CONFIG_DEFAULT, 
@@ -13,6 +14,7 @@ import {
 } from './actionTypes';
 
 const initialState = {
+  configDefault: [],
   config: [],
   selectors: [],
   selectorConfigDefault: [],
@@ -20,10 +22,24 @@ const initialState = {
 };
 
 const toggleEnabled = async (payload) => {
+  console.log(JSON.stringify(payload));
+
   try {
     const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${payload.piid}`, payload);
     if (res.status === 200) {
       console.log("Enable Plugin Response: ", payload.piid);
+      return res.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getConfigDefault = async () => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_API_STAGE}/configFactoryDefault`);
+    if (res.status === 200) {
+      console.log("Config default: ", res.data);
       return res.data;
     }
   } catch (error) {
@@ -79,6 +95,18 @@ const getSelectorConfig = async () => {
   }
 };
 
+const processConfig = (config, configDefault) => {
+  configDefault.forEach(plugin => {
+    if (!config.find(({ piid }) => piid === plugin.piid)) {
+      const newPlugin = {...plugin};
+
+      newPlugin.enabled = false;
+
+      config.push(newPlugin);
+    }
+  });
+}
+
 const setSelectorPlugins = (selectors, plugins) => {
   selectors.forEach(selector => {
     selector.legalValues.enum.forEach(value => {
@@ -128,7 +156,15 @@ const setPlugin = (selectorConfig, selectors, piid) => {
 
 const configReducer = (state, action) => {
   switch (action.type) {
+    case SET_CONFIG_DEFAULT:
+      return {
+        ...state,
+        configDefault: action.configDefault
+      };
+
     case SET_CONFIG:
+      processConfig(action.config, state.configDefault);
+
       return {
         ...state,
         config: action.config
@@ -188,6 +224,23 @@ export const ConfigProvider = ({ children }) => {
 
   useEffect(() => {
     (async () => {
+      try {
+        const res = await getConfigDefault();
+
+        if (configValidator(res)) {
+          dispatch({
+            type: SET_CONFIG_DEFAULT,
+            configDefault: res
+          });
+        } 
+        else {
+          throw new Error("Default config data is invalid: " + res);
+        }
+      }
+      catch (error) {
+        console.log(error);
+      } 
+
       try {
         const res = await getConfig();
 

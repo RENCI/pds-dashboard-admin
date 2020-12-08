@@ -11,7 +11,7 @@ import './plugin-details.styles.scss';
 const INITIALIZE_VALUES = "INITIALIZE_VALUES";
 const SET_VALUE = "SET_VALUE";
  
-const PluginDetails = ({ piid, settings }) => {
+const PluginDetails = ({ plugin }) => {
   const [parameters, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case INITIALIZE_VALUES:
@@ -33,6 +33,8 @@ const PluginDetails = ({ piid, settings }) => {
         console.log("Invalid action type: " + action.type);
     }
   }, []);
+
+  const settings = plugin.settingsDefaults;
 
   const selectors = settings && settings.pluginSelectors ? settings.pluginSelectors.filter(({ id }) => id !== "pluginType") : [];
   const variables = settings && settings.patientVariables ? settings.patientVariables : [];
@@ -132,19 +134,17 @@ const PluginDetails = ({ piid, settings }) => {
 
   const onUpdateClick = async () => {
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${piid}`, {
-        piid: piid,
-        settingsDefaults: {
-          modelParameters: parameters.map(parameter => {
-            return {
-              id: parameter.id,
-              parameterValue: {
-                value: parameter.parameterValue.value
-              }
-            };
-          })
-        }
-      });
+      const pluginUpdate = {...plugin};
+
+      delete pluginUpdate.tableData;
+      
+      pluginUpdate.settingsDefaults.modelParameters = parameters.map(parameter => ({...parameter}));   
+      
+      console.log(JSON.stringify(pluginUpdate));
+
+      const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${pluginUpdate.piid}`, pluginUpdate);
+
+
 
       console.log(res);
     }
