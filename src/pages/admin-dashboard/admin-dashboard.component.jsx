@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { ConfigContext } from "../../context/config-context";
 import SelectorTable from "../../components/selector-table/selector-table.component";
 import SelectorTableSelectors from "../../components/selector-table-selectors/selector-table-selectors.component";

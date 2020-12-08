@@ -114,10 +114,8 @@ const copySelectorConfigPlugins = (selectorConfig, selectorDefaultConfig) => {
       return selectorGroupCompare(rule.selectors, defaultRule.selectors);
     });
 
-    if (defaultRule) {
-      rule.plugins = [...defaultRule.plugins]
-    }
-  })
+    rule.plugins = defaultRule ? [...defaultRule.plugins] : [rule.plugin];
+  });
 };
 
 const setPlugin = (selectorConfig, selectors, piid) => {
