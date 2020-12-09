@@ -3,8 +3,8 @@ import { ConfigContext } from "../../context/config-context";
 import SelectorTable from "../../components/selector-table/selector-table.component";
 import SelectorTableSelectors from "../../components/selector-table-selectors/selector-table-selectors.component";
 import SelectorTablePlugins from "../../components/selector-table-plugins/selector-table-plugins.component";
-import CustomTable from "../../components/custom-table/custom-table.component";
-import CustomTableSwitch from "../../components/custom-table-switch/custom-table-switch.component";
+import PluginTable from "../../components/plugin-table/plugin-table.component";
+import PluginTableSwitch from "../../components/plugin-table-switch/plugin-table-switch.component";
 
 import "./admin-dashboard.styles.scss";
 
@@ -13,6 +13,8 @@ const AdminDashboard = () => {
   const { config, selectors, selectorConfig } = context;
 
   const guidancePlugins = config.filter(plugin => plugin.pluginType === "g");
+
+
 
   return (
     <div className="container">
@@ -46,44 +48,30 @@ const AdminDashboard = () => {
         selectors={ selectors }
         plugins={ guidancePlugins }
       />      
-      <CustomTable
-        title={"Guidance Plugins"}
-        tableHeaders={[
-          { title: "ID", field: "piid" },
-          { title: "Title", field: "title" },
-          { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
-        ]}
-        plugins={ guidancePlugins }
-      />
-      <CustomTable
-        title={"Mapper Plugins"}
-        tableHeaders={[
-          { title: "ID", field: "piid" },
-          { title: "Title", field: "title" },
-          { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
-        ]}
-        plugins={ config.filter(plugin => plugin.pluginType === "m") }
-        defaultPlugin={ config.filter(plugin => plugin.pluginType === "md") }
-      />
-      <CustomTable
-        title={"FHIR Plugins"}
-        tableHeaders={[
-          { title: "ID", field: "piid" },
-          { title: "Title", field: "title" },
-          { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
-        ]}
-        plugins={ config.filter(plugin => plugin.pluginType === "f") }
-        defaultPlugin={ config.filter(plugin => plugin.pluginType === "fd") }
-      />
-      <CustomTable
-        title={"Convenience Plugins"}
-        tableHeaders={[
-          { title: "ID", field: "piid" },
-          { title: "Title", field: "title" },
-          { title: "Enabled", width: 0, render: rowData => <CustomTableSwitch {...rowData} /> }
-        ]}
-        plugins={ config.filter(plugin => plugin.pluginType === "c") }
-      />
+      <div className="grid-item">
+        <PluginTable
+          title={"Guidance Plugins"}
+          plugins={ guidancePlugins }
+        />
+      </div>
+      <div className="grid-item">
+        <PluginTable
+          title={"Mapper Plugins"}
+          plugins={ config.filter(plugin => plugin.pluginType === "m") }
+        />
+      </div>
+      <div className="grid-item">
+        <PluginTable
+          title={"FHIR Plugins"}
+          plugins={ config.filter(plugin => plugin.pluginType === "f") }
+        />
+      </div>
+      <div className="grid-item">
+        <PluginTable
+          title={"Convenience Plugins"}
+          plugins={ config.filter(plugin => plugin.pluginType === "c") }
+        />
+      </div>
     </div>
   );
 }
