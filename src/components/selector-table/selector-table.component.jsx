@@ -12,20 +12,21 @@ import "./selector-table.styles.scss";
 
 const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders }) => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [confirmDialogText, setConfirmDialogText] = useState(null);
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
   const [removeRowData, setRemoveRowData] = useState(null);
+  const [resetDialogOpen, setResetDialogOpen] = useState(false);
   const [, configDispatch] = useContext(ConfigContext);
 
   const onResetClick = async () => {
-    setConfirmDialogText("Reset selector rules to defaults?");
+    setResetDialogOpen(true);
   };
 
   const onResetDialogClose = () => {
-    setConfirmDialogText(null);
+    setResetDialogOpen(false);
   };
 
   const onResetDialogConfirm = async () => {
-    setConfirmDialogText(null);
+    setResetDialogOpen(false);
 
     try {
       // XXX: Implement reset
@@ -53,7 +54,7 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
         }))
       }]);
 
-      configDispatch({ type: SET_SELECTOR_CONFIG, selectorConfig: res });
+      configDispatch({ type: SET_SELECTOR_CONFIG, selectorConfig: res.data });
     }
     catch (error) {
       console.log(error);
@@ -65,17 +66,17 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
   };
 
   const onRemoveClick = rowData => {
-    setConfirmDialogText("Remove selector rule?");
+    setRemoveDialogOpen(true);
     setRemoveRowData(rowData);
   };
 
   const onRemoveDialogClose = () => {
-    setConfirmDialogText(null);
+    setRemoveDialogOpen(false);
     setRemoveRowData(null);
   };
 
   const onRemoveDialogConfirm = async () => {
-    setConfirmDialogText(null);
+    setRemoveDialogOpen(false);
     setRemoveRowData(null);
 
     try {
@@ -127,8 +128,13 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
         onConfirm={ onAddDialogConfirm }
         onClose={ onAddDialogClose } />
       <ConfirmDialog 
-        open={ confirmDialogText !== null } 
-        text={ confirmDialogText }
+        open={ removeDialogOpen } 
+        text={ "Remove selector rule?" }
+        onConfirm={ onRemoveDialogConfirm } 
+        onClose={ onRemoveDialogClose } />
+      <ConfirmDialog 
+        open={ resetDialogOpen } 
+        text={ "Reset selector rules to defaults?" }
         onConfirm={ onResetDialogConfirm } 
         onClose={ onResetDialogClose } />
     </div>

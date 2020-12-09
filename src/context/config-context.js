@@ -22,12 +22,10 @@ const initialState = {
 };
 
 const toggleEnabled = async (payload) => {
-  console.log(JSON.stringify(payload));
-
   try {
     const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${payload.piid}`, payload);
+
     if (res.status === 200) {
-      console.log("Enable Plugin Response: ", payload.piid);
       return res.data;
     }
   } catch (error) {
@@ -186,6 +184,8 @@ const configReducer = (state, action) => {
     }
 
     case SET_SELECTOR_CONFIG: {
+      console.log(action, state);
+
       copySelectorConfigPlugins(action.selectorConfig, state.selectorConfigDefault);
 
       return {
@@ -195,9 +195,6 @@ const configReducer = (state, action) => {
     }
 
     case TOGGLE_ENABLED:
-      toggleEnabled(action.payload);
-
-      // XXX: Should response in toggleEnabled contain updated plugin?
       const plugin = state.config.find(plugin => plugin.piid === action.payload.piid);
       plugin.enabled = action.payload.enabled;
 
