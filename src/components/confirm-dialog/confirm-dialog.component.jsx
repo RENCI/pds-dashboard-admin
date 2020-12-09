@@ -1,7 +1,7 @@
 import React from "react";
 import { Dialog, DialogContent, DialogContentText, DialogActions, Button } from "@material-ui/core";
 
-const ConfirmRemoveDialog = ({ open, onConfirm, onClose }) => {  
+const ConfirmDialog = ({ open, text, onConfirm, onClose }) => {  
   return (
     <Dialog
       open={ open }
@@ -9,7 +9,7 @@ const ConfirmRemoveDialog = ({ open, onConfirm, onClose }) => {
     >
       <DialogContent>
         <DialogContentText>
-          Remove selector rule?
+          { text }
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -30,4 +30,4 @@ const ConfirmRemoveDialog = ({ open, onConfirm, onClose }) => {
   );
 };
 
-export default ConfirmRemoveDialog;
+export default ConfirmDialog;

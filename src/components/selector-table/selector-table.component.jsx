@@ -1,24 +1,43 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { Button, IconButton } from "@material-ui/core";
-import { Add, DeleteOutline } from "@material-ui/icons";
+import { Box, Button, IconButton } from "@material-ui/core";
+import { Add, DeleteOutline, Autorenew } from "@material-ui/icons";
 import MaterialTable from "material-table";
 import { ConfigContext } from "../../context/config-context"; 
 import { SET_SELECTOR_CONFIG } from '../../context/actionTypes';
 import AddSelectorsDialog from "../add-selectors-dialog/add-selectors-dialog.component";
-import ConfirmRemoveDialog from "../confirm-remove-dialog/confirm-remove-dialog.component";
+import ConfirmDialog from "../confirm-dialog/confirm-dialog.component";
 
 import "./selector-table.styles.scss";
 
 const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders }) => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
+  const [confirmDialogText, setConfirmDialogText] = useState(null);
   const [removeRowData, setRemoveRowData] = useState(null);
   const [, configDispatch] = useContext(ConfigContext);
 
+  const onResetClick = async () => {
+    setConfirmDialogText("Reset selector rules to defaults?");
+  };
+
+  const onResetDialogClose = () => {
+    setConfirmDialogText(null);
+  };
+
+  const onResetDialogConfirm = async () => {
+    setConfirmDialogText(null);
+
+    try {
+      // XXX: Implement reset
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   const onAddDialogClick = () => {
     setAddDialogOpen(true);
-  }
+  };
 
   const onAddDialogConfirm = async rule => {
     setAddDialogOpen(false);
@@ -39,24 +58,24 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
     catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const onAddDialogClose = () => {
     setAddDialogOpen(false);
-  }
+  };
 
   const onRemoveClick = rowData => {
-    setRemoveDialogOpen(true);
+    setConfirmDialogText("Remove selector rule?");
     setRemoveRowData(rowData);
   };
 
   const onRemoveDialogClose = () => {
-    setRemoveDialogOpen(false);
+    setConfirmDialogText(null);
     setRemoveRowData(null);
   };
 
   const onRemoveDialogConfirm = async () => {
-    setRemoveDialogOpen(false);
+    setConfirmDialogText(null);
     setRemoveRowData(null);
 
     try {
@@ -73,7 +92,7 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
   };
 
   return (
-    <div className="grid-item">
+    <div className="grid-item">      
       <MaterialTable
         title={ title }
         columns={ [...tableHeaders,
@@ -81,24 +100,37 @@ const SelectorTable = ({ selectorConfig, selectors, plugins, title, tableHeaders
         }
         data={ selectorConfig }        
       />
-      <ConfirmRemoveDialog 
-        open={ removeDialogOpen } 
-        onConfirm={ onRemoveDialogConfirm } 
-        onClose={ onRemoveDialogClose } />
-      <Button 
-        variant="contained" 
-        color="primary"
-        startIcon={ <Add /> }
-        onClick={ onAddDialogClick }>
-          Add Selector Rule
-      </Button> 
+      <Box width={ 1 } display="flex">
+        <Box flexGrow= { 1 }>
+          <Button 
+            variant="contained" 
+            color="primary"
+            startIcon={ <Add /> }
+            onClick={ onAddDialogClick }
+          >
+            Add Selector Rule
+          </Button>
+        </Box>
+        <Button
+          variant="outlined"
+          color="secondary"
+          startIcon={ <Autorenew /> }
+          onClick={ onResetClick }
+        >
+          Reset to Defaults
+        </Button>
+      </Box>
       <AddSelectorsDialog 
         allSelectors={ selectors } 
         plugins={ plugins }
         open={ addDialogOpen } 
         onConfirm={ onAddDialogConfirm }
-        onClose={ onAddDialogClose } 
-      />
+        onClose={ onAddDialogClose } />
+      <ConfirmDialog 
+        open={ confirmDialogText !== null } 
+        text={ confirmDialogText }
+        onConfirm={ onResetDialogConfirm } 
+        onClose={ onResetDialogClose } />
     </div>
   );
 };
