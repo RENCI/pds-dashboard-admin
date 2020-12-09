@@ -1,12 +1,14 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect } from "react";
 import { 
   Box, List, ListSubheader, ListItem, 
   FormControl, InputLabel, Select, MenuItem, Input, Button, Switch
-} from '@material-ui/core';
+} from "@material-ui/core";
+import { MuiPickersUtilsProvider, KeyboardTimePicker } from "@material-ui/pickers";
+import DateFnsUtil from "@date-io/date-fns"
 import axios from "axios";
 import SelectorDisplay from "../selector-display/selector-display.component";
 
-import './plugin-details.styles.scss';
+import "./plugin-details.styles.scss";
 
 const INITIALIZE_VALUES = "INITIALIZE_VALUES";
 const SET_VALUE = "SET_VALUE";
@@ -60,6 +62,10 @@ const PluginDetails = ({ plugin }) => {
       dispatch({ type: SET_VALUE, id: parameter.id, value: evt.target.value });
     };
 
+    const onTimeChange = date => {
+      console.log(date);
+    };
+
     const onBooleanChange = evt => {
       dispatch({ type: SET_VALUE, id: parameter.id, value: evt.target.checked });
     };
@@ -86,7 +92,15 @@ const PluginDetails = ({ plugin }) => {
         );
 
       case "time":
-        return null;
+        return (
+          <Box mt={ 1 }>
+            <MuiPickersUtilsProvider utils={ DateFnsUtil }>
+              <KeyboardTimePicker 
+                label="Set default"
+                onChange={ onTimeChange } />
+            </MuiPickersUtilsProvider>
+          </Box>
+        );
 
       case "string":
         return (

@@ -4,7 +4,6 @@ import SelectorTable from "../../components/selector-table/selector-table.compon
 import SelectorTableSelectors from "../../components/selector-table-selectors/selector-table-selectors.component";
 import SelectorTablePlugins from "../../components/selector-table-plugins/selector-table-plugins.component";
 import PluginTable from "../../components/plugin-table/plugin-table.component";
-import PluginTableSwitch from "../../components/plugin-table-switch/plugin-table-switch.component";
 
 import "./admin-dashboard.styles.scss";
 
@@ -13,8 +12,6 @@ const AdminDashboard = () => {
   const { config, selectors, selectorConfig } = context;
 
   const guidancePlugins = config.filter(plugin => plugin.pluginType === "g");
-
-
 
   return (
     <div className="container">

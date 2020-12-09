@@ -195,6 +195,8 @@ const configReducer = (state, action) => {
     }
 
     case TOGGLE_ENABLED:
+      toggleEnabled(action.payload);
+
       const plugin = state.config.find(plugin => plugin.piid === action.payload.piid);
       plugin.enabled = action.payload.enabled;
 
