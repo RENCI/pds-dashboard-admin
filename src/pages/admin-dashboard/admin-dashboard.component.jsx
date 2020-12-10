@@ -51,7 +51,11 @@ const AdminDashboard = () => {
             />
           </div>
         </>
-      : <LinearProgress /> }
+      : <div className="grid-item">
+          Loading
+          <LinearProgress />
+        </div> 
+      }
     </div>
   );
 }
