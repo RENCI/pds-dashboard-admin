@@ -63,7 +63,7 @@ const PluginDetails = ({ plugin }) => {
     };
 
     const onTimeChange = date => {
-      console.log(date);
+      dispatch({ type: SET_VALUE, id: parameter.id, value: date });
     };
 
     const onBooleanChange = evt => {
@@ -97,6 +97,7 @@ const PluginDetails = ({ plugin }) => {
             <MuiPickersUtilsProvider utils={ DateFnsUtil }>
               <KeyboardTimePicker 
                 label="Set default"
+                value={ parameter.parameterValue.value }
                 onChange={ onTimeChange } />
             </MuiPickersUtilsProvider>
           </Box>
