@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import { 
   Box, List, ListSubheader, ListItem, 
-  FormControl, InputLabel, Select, MenuItem, Input, Button, Switch
+  FormControl, FormHelperText, InputLabel, Select, MenuItem, Input, Button, Switch
 } from "@material-ui/core";
 import { MuiPickersUtilsProvider, KeyboardTimePicker } from "@material-ui/pickers";
 import DateFnsUtil from "@date-io/date-fns"
@@ -14,7 +14,31 @@ const INITIALIZE_VALUES = "INITIALIZE_VALUES";
 const SET_VALUE = "SET_VALUE";
  
 const PluginDetails = ({ plugin }) => {
-  const [parameters, dispatch] = useReducer((state, action) => {
+  const [variables, variablesDispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case INITIALIZE_VALUES:
+        return action.variables.map(variable => ({...variable}));
+
+      case SET_VALUE: {
+        const newState = [...state];
+
+        const variable = newState.find(({ id }) => id === action.id);
+
+        if (!variable) return state;
+
+        if (!variable.variableValue) variable.variableValue = {};
+
+        variable.variableValue.value = action.value;
+
+        return newState;
+      }
+
+      default:
+        console.log("Invalid action type: " + action.type);
+    }
+  }, []);
+
+  const [parameters, parametersDispatch] = useReducer((state, action) => {
     switch (action.type) {
       case INITIALIZE_VALUES:
         return action.parameters.map(parameter => ({...parameter}));
@@ -39,35 +63,41 @@ const PluginDetails = ({ plugin }) => {
   const settings = plugin.settingsDefaults;
 
   const selectors = settings && settings.pluginSelectors ? settings.pluginSelectors.filter(({ id }) => id !== "pluginType") : [];
-  const variables = settings && settings.patientVariables ? settings.patientVariables : [];
 
   useEffect(() => {
-    dispatch({ 
+    variablesDispatch({ 
+      type: INITIALIZE_VALUES, 
+      variables: settings && settings.patientVariables ? settings.patientVariables : [] 
+    });
+
+    parametersDispatch({ 
       type: INITIALIZE_VALUES, 
       parameters: settings && settings.modelParameters ? settings.modelParameters : [] 
     });
   }, [settings]);
 
-  const parameterControl = parameter => {
+  const control = (id, legalValues, value, dispatch) => {
     const type = 
-      parameter.legalValues.type === "string" && parameter.legalValues.enum ? "enum" :
-      parameter.legalValues.type === "string" && parameter.legalValues.format === "time-stamp" ? "time" :
-      parameter.legalValues.type === "string" ? "string" :
-      parameter.legalValues.type === "number" ? "number" :
-      parameter.legalValues.type === "integer" ? "number" :
-      parameter.legalValues.type === "boolean" ? "boolean" : 
+      legalValues.type === "string" && legalValues.enum ? "enum" :
+      legalValues.type === "string" && legalValues.format === "time-stamp" ? "time" :
+      legalValues.type === "string" ? "string" :
+      legalValues.type === "number" ? "number" :
+      legalValues.type === "integer" ? "number" :
+      legalValues.type === "boolean" ? "boolean" : 
       "unknown";
 
+    if (value === null) value = type === "boolean" ? false : "";
+
     const onChange = evt => {
-      dispatch({ type: SET_VALUE, id: parameter.id, value: evt.target.value });
+      dispatch({ type: SET_VALUE, id: id, value: evt.target.value });
     };
 
     const onTimeChange = date => {
-      dispatch({ type: SET_VALUE, id: parameter.id, value: date });
+      dispatch({ type: SET_VALUE, id: id, value: date });
     };
 
     const onBooleanChange = evt => {
-      dispatch({ type: SET_VALUE, id: parameter.id, value: evt.target.checked });
+      dispatch({ type: SET_VALUE, id: id, value: evt.target.checked });
     };
 
     const minWidth = 200;
@@ -79,11 +109,11 @@ const PluginDetails = ({ plugin }) => {
             <FormControl style={{ minWidth: minWidth }}>
               <InputLabel>Set Default</InputLabel>
               <Select 
-              fullWidth={ true }
-                value={ parameter.parameterValue.value }
+                fullWidth={ true }
+                value={ value }
                 onChange={ onChange }
               >
-                { parameter.legalValues.enum.map((value, i) => (
+                { legalValues.enum.map((value, i) => (
                   <MenuItem key={ i} value={ value }>{ value }</MenuItem>
                 ))}
               </Select>
@@ -96,8 +126,8 @@ const PluginDetails = ({ plugin }) => {
           <Box mt={ 1 }>
             <MuiPickersUtilsProvider utils={ DateFnsUtil }>
               <KeyboardTimePicker 
-                label="Set default"
-                value={ parameter.parameterValue.value }
+                label="Set Default"
+                value={ value }
                 onChange={ onTimeChange } />
             </MuiPickersUtilsProvider>
           </Box>
@@ -105,12 +135,12 @@ const PluginDetails = ({ plugin }) => {
 
       case "string":
         return (
-          <Box mt={1}>
+          <Box mt={ 1 }>
             <FormControl fullWidth={ true }>
               <InputLabel>Set Default</InputLabel>
               <Input                 
                 type="text"
-                value={ parameter.parameterValue.value ? parameter.parameterValue.value : "" }
+                value={ value ? value : "" }
                 fullWidth={ true }
                 onChange={ onChange } />
             </FormControl>
@@ -119,15 +149,15 @@ const PluginDetails = ({ plugin }) => {
 
       case "number":
         return (
-          <Box mt={1}>
+          <Box mt={ 1 }>
             <FormControl style={{ minWidth: minWidth }}>
               <InputLabel>Set Default</InputLabel>
               <Input 
                 type="number"
-                value={ parameter.parameterValue.value }
+                value={ value }
                 inputProps={{ 
-                  min: parameter.legalValues.minimum, 
-                  max: parameter.legalValues.maximum 
+                  min: legalValues.minimum, 
+                  max: legalValues.maximum 
                 }}
                 onChange={ onChange } />
             </FormControl>
@@ -136,14 +166,19 @@ const PluginDetails = ({ plugin }) => {
 
       case "boolean":
         return (
-          <Switch 
-            checked={ parameter.parameter.value } 
-            color="primary"
-            onChange={ onBooleanChange } />
+          <Box mt={ 1 }>
+            <FormControl style={{ minWidth: minWidth }}>
+              <FormHelperText>Set Default</FormHelperText>
+              <Switch 
+                checked={ value } 
+                color="primary"
+                onChange={ onBooleanChange } />
+            </FormControl>
+          </Box>
         );
 
       default:
-        console.log("Invalid parameter type:" + parameter.legalValues.type);
+        console.log("Invalid parameter type: " + legalValues.type);
     }
   };
 
@@ -152,14 +187,13 @@ const PluginDetails = ({ plugin }) => {
       const pluginUpdate = {...plugin};
 
       delete pluginUpdate.tableData;
-      
+
+      pluginUpdate.settingsDefaults.patientVariables = variables.map(variable => ({...variable}));
       pluginUpdate.settingsDefaults.modelParameters = parameters.map(parameter => ({...parameter}));   
       
       console.log(JSON.stringify(pluginUpdate));
 
       const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${pluginUpdate.piid}`, pluginUpdate);
-
-
 
       console.log(res);
     }
@@ -184,7 +218,7 @@ const PluginDetails = ({ plugin }) => {
         <ListSubheader>{ variables.length > 0 ? "Patient Variables" : "No Patient Variables" }</ListSubheader>
         { variables.map((variable, i) => (
           <ListItem key={ i }>
-            <Box>
+            <Box width={ 1 } p={ 1 } border={ 1 } borderColor="warning.light" borderRadius="borderRadius" mb={ 1 }>
               <Box component="span">{ variable.id }</Box>
               { variable.title ? 
                 <>—<Box component="span">{ variable.title }</Box></>
@@ -192,6 +226,12 @@ const PluginDetails = ({ plugin }) => {
               { variable.why ? 
                 <>: <Box component="span" color="text.secondary">{ variable.why }</Box></>
               : null }
+              { control(
+                  variable.id, 
+                  variable.legalValues, 
+                  variable.variableValue ? variable.variableValue.value : null, 
+                  variablesDispatch
+                ) }
             </Box>
           </ListItem> 
         ))}
@@ -200,7 +240,7 @@ const PluginDetails = ({ plugin }) => {
         <ListSubheader>{ parameters.length > 0 ? "Model Parameters" : "No Model Parameters" }</ListSubheader>
         { parameters.map((parameter, i) => (
           <ListItem key={ i }>
-            <Box mb={ 2 }>
+            <Box width={ 1 } p={ 1 } border={ 1 } borderColor="info.light" borderRadius="borderRadius" mb={ 1 }>
               <Box component="span">{ parameter.id }</Box>
               { parameter.title ? 
                 <>—<Box component="span">{ parameter.title }</Box></>
@@ -208,7 +248,12 @@ const PluginDetails = ({ plugin }) => {
               { parameter.parameterDescription ? 
                 <>: <Box component="span" color="text.secondary">{ parameter.parameterDescription }</Box></>
               : null }
-              { parameterControl(parameter) }
+              { control(
+                  parameter.id, 
+                  parameter.legalValues, 
+                  parameter.parameterValue.value, 
+                  parametersDispatch
+                ) }
             </Box>
           </ListItem> 
         ))}

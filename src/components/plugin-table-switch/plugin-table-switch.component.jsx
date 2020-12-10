@@ -9,20 +9,22 @@ const CustomTableSwitch = ({ enabled, piid, pluginType }) => {
 
   useEffect(() => {
     setChecked(enabled);
-  }, [piid]);
+  }, [enabled]);
 
   const handleEnableToggle = async () => {
+    const newValue = !checked;
+
     // Set checked first for UI performance
-    setChecked(!checked);
+    setChecked(newValue);
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${piid}`, {
+      await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${piid}`, {
         piid: piid,
         pluginType: pluginType,
-        enabled: enabled
+        enabled: newValue
       });
   
-      dispatch({ type: "TOGGLE_ENABLED", enabled: checked, piid: piid });      
+      dispatch({ type: "TOGGLE_ENABLED", enabled: newValue, piid: piid });      
     } catch (error) {
       console.error(error);
     }   
