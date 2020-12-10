@@ -14,11 +14,11 @@ import {
 } from './actionTypes';
 
 const initialState = {
-  configDefault: [],
-  config: [],
-  selectors: [],
-  selectorConfigDefault: [],
-  selectorConfig: []
+  configDefault: null,
+  config: null,
+  selectors: null,
+  selectorConfigDefault: null,
+  selectorConfig: null
 };
 
 const getConfigDefault = async () => {
@@ -172,8 +172,6 @@ const configReducer = (state, action) => {
     }
 
     case SET_SELECTOR_CONFIG: {
-      console.log(action, state);
-
       copySelectorConfigPlugins(action.selectorConfig, state.selectorConfigDefault);
 
       return {
