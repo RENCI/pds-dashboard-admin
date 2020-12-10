@@ -21,18 +21,6 @@ const initialState = {
   selectorConfig: []
 };
 
-const toggleEnabled = async (payload) => {
-  try {
-    const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${payload.piid}`, payload);
-
-    if (res.status === 200) {
-      return res.data;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const getConfigDefault = async () => {
   try {
     const res = await axios.get(`${process.env.REACT_APP_API_STAGE}/configFactoryDefault`);
@@ -195,10 +183,11 @@ const configReducer = (state, action) => {
     }
 
     case TOGGLE_ENABLED:
-      toggleEnabled(action.payload);
+      const plugin = state.config.find(({ piid }) => piid === action.piid);
 
-      const plugin = state.config.find(plugin => plugin.piid === action.payload.piid);
-      plugin.enabled = action.payload.enabled;
+      if (!plugin) return {...state};
+
+      plugin.enabled = action.enabled;
 
       return {
         ...state
