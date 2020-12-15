@@ -19,6 +19,18 @@ const SelectorTable = ({ selectorConfig, selectors, plugins }) => {
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
   const [, configDispatch] = useContext(ConfigContext);
 
+  const ruleData = rule => ([{
+    piid: rule.plugin.piid,
+    selectors: rule.selectors.filter(({ id }) => id !== "pluginType")
+      .map(({ id, title, selectorValue }) => ({ 
+        id: id,
+        title: title,
+        selectorValue: {
+          value: selectorValue.value
+        }
+      }))
+  }])
+
   const onResetClick = async () => {
     setResetDialogOpen(true);
   };
@@ -46,15 +58,7 @@ const SelectorTable = ({ selectorConfig, selectors, plugins }) => {
     setAddDialogOpen(false);
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, [{
-        piid: rule.plugin.piid,
-        selectors: rule.selectors.map(({ id, selectorValue }) => ({ 
-          id: id,
-          selectorValue: {
-            value: selectorValue.value
-          }
-        }))
-      }]);
+      const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, ruleData(rule));
 
       configDispatch({ type: SET_SELECTOR_CONFIG, selectorConfig: res.data });
     }
@@ -82,10 +86,9 @@ const SelectorTable = ({ selectorConfig, selectors, plugins }) => {
     setRemoveRowData(null);
 
     try {
-      const res = await axios.delete(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, [{
-        piid: removeRowData.plugin.piid,
-        selectors: removeRowData.selectors.map(({ id }) => ({ id: id }))
-      }]);
+      const res = await axios.delete(`${process.env.REACT_APP_API_STAGE}/selectorConfig`, {
+        data: ruleData(removeRowData)
+      });
 
       console.log(res);
     }
