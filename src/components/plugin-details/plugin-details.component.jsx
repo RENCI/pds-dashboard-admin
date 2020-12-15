@@ -190,12 +190,8 @@ const PluginDetails = ({ plugin }) => {
 
       pluginUpdate.settingsDefaults.patientVariables = variables.map(variable => ({...variable}));
       pluginUpdate.settingsDefaults.modelParameters = parameters.map(parameter => ({...parameter}));   
-      
-      console.log(JSON.stringify(pluginUpdate));
 
       const res = await axios.post(`${process.env.REACT_APP_API_STAGE}/config/${pluginUpdate.piid}`, pluginUpdate);
-
-      console.log(res);
     }
     catch (error) {
       console.log(error);

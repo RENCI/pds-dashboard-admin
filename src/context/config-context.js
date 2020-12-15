@@ -10,7 +10,8 @@ import {
   SET_SELECTOR_CONFIG_DEFAULT, 
   SET_SELECTOR_CONFIG,
   TOGGLE_ENABLED,
-  SET_PLUGIN
+  SET_PLUGIN,
+  UPDATE_PLUGIN
 } from './actionTypes';
 
 const initialState = {
@@ -183,20 +184,22 @@ const configReducer = (state, action) => {
     case TOGGLE_ENABLED:
       const plugin = state.config.find(({ piid }) => piid === action.piid);
 
-      if (!plugin) return {...state};
+      if (plugin) plugin.enabled = action.enabled;
 
-      plugin.enabled = action.enabled;
-
-      return {
-        ...state
-      };
+      return {...state};
 
     case SET_PLUGIN:
       setPlugin(state.selectorConfig, action.selectors, action.piid);
 
-      return {
-        ...state
-      };
+      return {...state};
+
+    case UPDATE_PLUGIN: {
+      const index = state.config.findIndex(({ piid }) => piid === action.plugin.piid);
+
+      if (index !== -1) state.config[index] = {...action.plugin};
+
+      return {...state};
+    }
 
     default:
       throw new Error("Invalid config action: " + action.type);

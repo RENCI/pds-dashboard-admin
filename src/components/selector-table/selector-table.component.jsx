@@ -90,7 +90,7 @@ const SelectorTable = ({ selectorConfig, selectors, plugins }) => {
         data: ruleData(removeRowData)
       });
 
-      console.log(res);
+      configDispatch({ type: SET_SELECTOR_CONFIG, selectorConfig: res.data });
     }
     catch (error) {
       console.log(error);
