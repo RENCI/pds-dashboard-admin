@@ -64,6 +64,8 @@ const PluginDetails = ({ plugin }) => {
 
   const selectors = settings && settings.pluginSelectors ? settings.pluginSelectors.filter(({ id }) => id !== "pluginType") : [];
 
+  const dependencies = plugin.pluginDependencies ? plugin.pluginDependencies : [];
+
   useEffect(() => {
     variablesDispatch({ 
       type: INITIALIZE_VALUES, 
@@ -210,6 +212,16 @@ const PluginDetails = ({ plugin }) => {
           </ListItem> 
         ))}
       </List>      
+      <List>
+        <ListSubheader>{ dependencies.length > 0 ? "Plugin Dependencies" : "No Plugin Dependencies" }</ListSubheader>
+        { dependencies.map((dependency, i) => (
+          <ListItem key={ i }>
+            <Box>
+              { dependency }
+            </Box>
+          </ListItem> 
+        ))}
+      </List>
       <List>
         <ListSubheader>{ variables.length > 0 ? "Patient Variables" : "No Patient Variables" }</ListSubheader>
         { variables.map((variable, i) => (
